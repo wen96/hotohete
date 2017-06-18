@@ -4,4 +4,4 @@ rvm:
 
 install: "pip install -r requirements.txt"
 
-script: "python hotohete/manage.py test"
+script: "python manage.py test"
