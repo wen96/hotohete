@@ -1,20 +1,40 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Hotohete CS:GO!</title>
-</head>
-
-<body>
-<h1>Hotohete CS:GO!</h1>
-{% for team in teams %}
-	<h2>{{ team.name }}</h2>
-	<ul>
-	{% for member in team.csuser_set.all %}
-		<li>{{ member.steam_username }}</li>
-	{% endfor %}
-	</ul>
-{% endfor %}
-</body>
-
+<html lang="en">
+	<head>
+	  <title>hotohete CSGO stats</title>
+	  <meta charset="utf-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		<div class="row">
+		<div class="col-sm-5">
+			</div>
+			<div class="col-sm-2">
+				<h1>Hotohete</h1>		
+			</div>
+			<div class="col-sm-5">
+			</div>
+		</div>
+		{% for team in teams %}
+		 <div class="row">
+		 	<div class="col-sm-5">
+		 	</div>
+		 	<div class="col-sm-2">
+		 		<h5>{{ team.name }}</h5>
+		 	</div>
+		 	<div class="col-sm-5">
+		 	</div>
+		 </div>
+		 {% for member in team.csuser_set.all %}
+		 <div class="row">
+		 	<div class="col-sm-2">
+		 		<p>{{ member.steam_username }}</p>
+		 	</div>
+		 	{% endfor %}
+		 </div>
+		 {% endfor %}
+	</body>
 </html>
