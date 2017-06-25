@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Hotohete CS:GO!</title>
+</head>
+
+<body>
+<h1>Hotohete CS:GO!</h1>
+{% for team in teams %}
+	<h2>{{ team.name }}</h2>
+	<ul>
+	{% for member in team.csuser_set.all %}
+		<li>{{ member.steam_username }}</li>
+	{% endfor %}
+	</ul>
+{% endfor %}
+</body>
+
+</html>
