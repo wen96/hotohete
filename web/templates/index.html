@@ -10,35 +10,31 @@
 	</head>
 	<body>
 		<div class="row">
-				<div class="col-sm-5">
-				</div>
-				<div class="col-sm-2">
-					<h1>Hotohete</h1>		
-				</div>
-				<div class="col-sm-5">
-				</div>
+			<div class="col-sm-4">
 			</div>
-		<div class="row">
-			<div class="col-md-10 col-md-offset-2">
-				{% for team in teams %}
-					 <div class="row">
+			<div class="col-sm-4">
+					<h1 class="text-center">Hotohete</h1>		
+			</div>
+			<div class="col-sm-4">
+			</div>
+		</div>
+			{% for team in teams %}
+				<div class="row">
+					<div class="col-sm-4">
+					</div>
 					 	<div class="col-sm-4">
-					 	</div>
-					 	<div class="col-sm-2">
-					 		<h5>{{ team.name }}</h5>
+					 		<h5 class="text-center">{{ team.name }}</h5>
 					 	</div>
 					 	<div class="col-sm-4">
 					 	</div>
 					 </div>
-			 {% for member in team.csuser_set.all %}
-				 <div class="row">
-				 	<div class="col-sm-2">
-				 		<p>{{ member.steam_username }}</p>
-				 	</div>
+					 <div class="row">
+			 		{% for member in team.csuser_set.all %}
+				 			<div class="col-sm-2">
+				 				<p>{{ member.steam_username }}</p>
+				 			</div>
 				 	{% endfor %}
-				 <!--this </div>  could be erased?-->
-			 {% endfor %}
-			</div>
-		</div>	
+				 	</div>
+			{% endfor %}
 	</body>
 </html>
