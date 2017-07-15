@@ -5,7 +5,7 @@ from api.services import SteamAPIService
 class CSUser(models.Model):
     steam_username = models.CharField(max_length=255)
     team = models.ForeignKey('api.CSTeam', on_delete=models.SET_NULL, null=True)
-    steam_id = models.CharField(max_length=126, null=True)
+    steam_id = models.CharField(max_length=126, null=True, blank=True)
 
     steam_service = SteamAPIService()
 
