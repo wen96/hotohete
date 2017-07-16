@@ -21,8 +21,7 @@ class SteamAPIService(object):
         url_params = "?key={}&vanityurl={}".format(self.api_key, nickname)
 
         json_object = self._request_endpoint("{}{}".format(url, url_params))
-
-        return json_object["response"]["steamid"]
+        return json_object["response"].get("steamid")
 
     def get_steam_info(self, steam_id):
         # TODO: Use a cache with TTL (time to live)
@@ -32,7 +31,10 @@ class SteamAPIService(object):
 
             json_object = self._request_endpoint("{}{}".format(url, url_params))
 
-            self.cache_steam_info[steam_id] = json_object["response"]["players"][0] if json_object else None
+            if json_object and json_object["response"]["players"]:
+                self.cache_steam_info[steam_id] = json_object["response"]["players"][0]
+            else:
+                self.cache_steam_info[steam_id] = None
 
         return self.cache_steam_info[steam_id]
 
