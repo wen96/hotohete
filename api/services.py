@@ -19,9 +19,9 @@ class SteamAPIService(object):
     def get_steam_id_from_nick_name(self, nickname):
         url = "{}/ISteamUser/ResolveVanityURL/v0001/".format(self.base_url)
         url_params = "?key={}&vanityurl={}".format(self.api_key, nickname)
-        response = urllib2.urlopen("{}{}".format(url, url_params))
-        response_content = response.read()
-        json_object = json.loads(response_content)
+
+        json_object = self._request_endpoint("{}{}".format(url, url_params))
+
         return json_object["response"]["steamid"]
 
     def get_steam_info(self, steam_id):
@@ -29,16 +29,28 @@ class SteamAPIService(object):
         if steam_id not in self.cache_steam_info:
             url = "{}/ISteamUser/GetPlayerSummaries/v0002/".format(self.base_url)
             url_params = "?key={}&steamids={}".format(self.api_key, steam_id)
-            response = urllib2.urlopen("{}{}".format(url, url_params))
-            response_content = response.read()
-            json_object = json.loads(response_content)
-            self.cache_steam_info[steam_id] = json_object["response"]["players"][0]
+
+            json_object = self._request_endpoint("{}{}".format(url, url_params))
+
+            self.cache_steam_info[steam_id] = json_object["response"]["players"][0] if json_object else None
+
         return self.cache_steam_info[steam_id]
 
     def get_cs_info(self, steam_id):
-        url = "{}/ISteamUserStats/GetUserStatsForGame/v0002/".format(self.base_url)
-        url_params = "?appid=730&key={}&steamid={}".format(self.api_key, steam_id)
-        response = urllib2.urlopen("{}{}".format(url, url_params))
-        response_content = response.read()
-        json_object = json.loads(response_content)
-        return json_object["playerstats"]["stats"]
+        if steam_id:
+            url = "{}/ISteamUserStats/GetUserStatsForGame/v0002/".format(self.base_url)
+            url_params = "?appid=730&key={}&steamid={}".format(self.api_key, steam_id)
+
+            json_object = self._request_endpoint("{}{}".format(url, url_params))
+
+            return json_object["playerstats"]["stats"] if json_object else None
+        return None
+
+    def _request_endpoint(self, url):
+        """ Returns an object loaded from a response expecting json response. None if 500 error.
+        """
+        try:
+            response = urllib2.urlopen(url)
+            return json.loads(response.read())
+        except urllib2.HTTPError:
+            return None
