@@ -34,8 +34,9 @@
 					 			<div class="thumbnail">
 							      <img src="{{member.get_steam_info.avatarfull}}" alt="{{ member.steam_username }}">
 							      <div class="caption">
-							        <h3 class="text-center">{{ member.steam_username }}</h3>
+							        <h3 class="text-center">{{ member.get_steam_info.personaname }}</h3>
 							        {% if member.get_cs_info %}
+							        	<p>Country: {{ member.get_steam_info.loccountrycode }}</p>
 								        <p>Kills: {{ member.get_cs_info.0.value | intcomma }}</p>
 								        <p>Deaths: {{ member.get_cs_info.1.value | intcomma }}</p>
 								        <p>Bombs planted: {{ member.get_cs_info.3.value | intcomma }}</p>
