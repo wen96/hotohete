@@ -26,3 +26,7 @@ class CSUser(models.Model):
     @property
     def get_cs_info(self):
         return self.steam_service.get_cs_info(self.get_steam_id)
+
+    @property
+    def get_weapon_group_per(self):
+        return self.steam_service.get_weapon_group_per(self.get_steam_id)
