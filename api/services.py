@@ -63,4 +63,134 @@ class SteamAPIService(object):
             response = urllib2.urlopen(url)
             return json.loads(response.read())
         except urllib2.HTTPError:
+
             return None
+
+    def get_weapon_group_per(self, steam_id):
+        # TODO: Refactor
+        """ Returns an object which contains kills percentage ordered by group of weapons
+        """
+        percentage_weapons = {}
+        json_object = self.get_cs_info(steam_id)
+
+        if json_object:
+            total_kills = json_object[0]["value"]
+
+            kills_pistol = json_object[11]["value"]  # glock
+            kills_pistol += json_object[135]["value"]  # usp/p2000
+            kills_pistol += json_object[139]["value"]  # p250
+            kills_pistol += json_object[168]["value"]  # tec
+            kills_pistol += json_object[14]["value"]  # five7
+            kills_pistol += json_object[13]["value"]  # dual berettas
+
+            percentage_weapons["pistols"] = (total_kills / kills_pistol) * 100
+
+            kills_shotgun = json_object[157]["value"]  # nova
+            kills_shotgun += json_object[15]["value"]  # XM
+            kills_shotgun += json_object[173]["value"]  # mag-7
+            kills_shotgun += json_object[163]["value"]  # sawed
+
+            percentage_weapons["shotguns"] = (total_kills / kills_shotgun) * 100
+
+            kills_sniper = json_object[19]["value"]  # awp
+            kills_sniper += json_object[149]["value"]  # matapatos
+            kills_sniper += json_object[12]["value"]  # deagle
+
+            percentage_weapons["snipers"] = (total_kills / kills_sniper) * 100
+
+            kills_rifle = json_object[20]["value"]  # AK-47
+            kills_rifle += json_object[176]["value"]  # M4
+            kills_rifle += json_object[22]["value"]  # FAMAS
+            kills_rifle += json_object[177]["value"]  # GALIL
+
+            percentage_weapons["rifles"] = (total_kills / kills_rifle) * 100
+
+            kills_smg = json_object[152]["value"]  # mp7
+            kills_smg += json_object[153]["value"]  # mp9
+            kills_smg += json_object[16]["value"]  # MAC-10
+            kills_smg += json_object[17]["value"]  # ump
+            kills_smg += json_object[167]["value"]  # bizon
+
+            percentage_weapons["smgs"] = (total_kills / kills_smg) * 100
+
+            percentage_weapons["knife"] = json_object[9]["value"]
+
+            percentage_weapons["tazer"] = json_object[179]["value"]
+
+            kills_throwable = json_object[10]["value"]  # HE
+            kills_throwable += json_object[178]["value"]  # molotov
+
+            percentage_weapons["throwable"] = (total_kills / kills_throwable) * 100
+
+            base = percentage_weapons["pistols"]["smg"]["snipers"]["rifles"]["shotguns"]["knife"]["tazer"]["throwable"]
+            percentage_weapons["trash"] = base / 100
+
+            return percentage_weapons
+
+        else:
+            return None
+
+
+"""    def get_weapon_group_per(self, steam_id, weapon):
+        # TODO: Refactor
+
+        json_object = self.get_cs_info(steam_id)
+
+        if json_object:
+            total_kills = json_object[0]["value"]
+
+            if weapon == "pistol":
+                kills_pistol = json_object[11]["value"]  # glock
+                kills_pistol = json_object[135]["value"]  # usp/p2000
+                kills_pistol += json_object[139]["value"]  # p250
+                kills_pistol += json_object[168]["value"]  # tec
+                kills_pistol += json_object[14]["value"]  # five7
+                kills_pistol += json_object[13]["value"]  # dual berettas
+                #  kills_pistol += json_object[4]["value"]  # CZ
+                # kills_pistol += json_object[4]["value"]  # R8
+                return (total_kills / kills_pistol) * 100
+
+            elif weapon == "shotgun":
+                kills_shotgun = json_object[157]["value"]  # nova
+                kills_shotgun += json_object[15]["value"]  # XM
+                kills_shotgun += json_object[173]["value"]  # mag-7
+                kills_shotgun += json_object[163]["value"]  # sawed
+
+                return (total_kills / kills_shotgun) * 100
+
+            elif weapon == "sniper":
+                kills_sniper = json_object[19]["value"]  # awp
+                kills_sniper += json_object[149]["value"]  # matapatos
+                kills_sniper += json_object[12]["value"]  # deagle
+
+                return (total_kills / kills_sniper) * 100
+
+            elif weapon == "rifles":
+                kills_rifle = json_object[20]["value"]  # AK-47
+                kills_rifle += json_object[176]["value"]  # M4
+                kills_rifle += json_object[22]["value"]  # FAMAS
+                kills_rifle += json_object[177]["value"]  # GALIL
+
+                return (total_kills / kills_rifle) * 100
+
+            elif weapon == "smg":
+                kills_smg = json_object[152]["value"]  # mp7
+                kills_smg += json_object[153]["value"]  # mp9
+                kills_smg += json_object[16]["value"]  # MAC-10
+                kills_smg += json_object[17]["value"]  # ump
+                kills_smg += json_object[167]["value"]  # bizon
+
+                return (total_kills / kills_smg) * 100
+
+            elif weapon == "knife":
+
+                return json_object[9]["value"]
+
+            else:
+                kills_throwable = json_object[10]["value"]  # HE
+                kills_throwable += json_object[178]["value"]  # molotov
+
+                return (total_kills / kills_throwable) * 100
+        else:
+            return None
+"""
