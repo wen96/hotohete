@@ -37,11 +37,20 @@
 							        <h3 class="text-center">{{ member.get_steam_info.personaname }}</h3>
 							        {% if member.get_cs_info %}
 							        	<p>Country: {{ member.get_steam_info.loccountrycode }}</p>
-								        <p>Kills: {{ member.get_cs_info.0.value | intcomma }}</p>
-								        <p>Deaths: {{ member.get_cs_info.1.value | intcomma }}</p>
-								        <p>Bombs planted: {{ member.get_cs_info.3.value | intcomma }}</p>
-								        <p>Wins: {{ member.get_cs_info.5.value | intcomma }}</p>
-								        <p>Wins: {{ member.get_weapon_group_per }}%</p>
+							        	<p>Hours: {% widthratio member.get_cs_info.total_time_played 3600 1 %}</p>
+								        <p>Kills: {{ member.get_cs_info.total_kills | intcomma }}</p>
+								        <p>Deaths: {{ member.get_cs_info.total_deaths | intcomma }}</p>
+								        <p>Bombs planted: {{ member.get_cs_info.total_planted_bombs | intcomma }}</p>
+								        <p>Bombs defused: {{ member.get_cs_info.total_defused_bombs | intcomma }}</p>
+								        <p>Wins: {{ member.get_cs_info.total_wins | intcomma }}</p>
+								        <ul>
+								        	<li>rifles: {% widthratio member.category_weapons_kills.rifle member.get_cs_info.total_kills 100 %}%</li>
+								        	<li>smg: {% widthratio member.category_weapons_kills.smg member.get_cs_info.total_kills 100 %}%</li>
+								        	<li>sniper: {% widthratio member.category_weapons_kills.sniper member.get_cs_info.total_kills 100 %}%</li>
+								        	<li>pistol: {% widthratio member.category_weapons_kills.pistol member.get_cs_info.total_kills 100 %}%</li>
+								        	<li>shotgun: {% widthratio member.category_weapons_kills.shotgun member.get_cs_info.total_kills 100 %}%</li>
+								        	<li>other: {% widthratio member.category_weapons_kills.other member.get_cs_info.total_kills 100 %}%</li>
+								        </ul>
 								    {% else %}
 								    	<p>The user info cannot be retrieved.</p>
 								    	<p>Check user profile visibility.</p>
