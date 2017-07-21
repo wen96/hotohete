@@ -9,19 +9,17 @@
 	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	</head>
-	<body>
+	<body style="background-color:#262626;color:#f2f2f2;font-family: Helvetica;">
 		<div class="container">
 			<div class="row">
-				<div class="col-sm-4">
-				</div>
-				<div class="col-sm-4">
-						<h1 class="text-center">Hotohete</h1>		
-				</div>
-				<div class="col-sm-4">
+				<div class="col-sm-12">
+					<div class="page-header">
+  							<h1 class="text-center">Hotohete CSGO stats</h1>
+					</div>	
 				</div>
 			</div>
 				{% for team in teams %}
-					<div class="row">
+					<div class="row" style="margin-bottom: 10px;">
 						<div class="col-sm-4"></div>
 						<div class="col-sm-4">
 						 	<h2 class="text-center">{{ team.name }}</h2>
@@ -31,15 +29,27 @@
 					<div class="row">
 				 		{% for member in team.csuser_set.all %}
 					 		<div class="col-sm-3">
-					 			<div class="thumbnail">
+					 			<div class="thumbnail" style="background-color:#f2f2f2">
 							      <img src="{{member.get_steam_info.avatarfull}}" alt="{{ member.steam_username }}">
 							      <div class="caption">
-							        <h3 class="text-center">{{ member.steam_username }}</h3>
+							        <h3 class="text-center">{{ member.get_steam_info.personaname }}</h3>
 							        {% if member.get_cs_info %}
-								        <p>Kills: {{ member.get_cs_info.0.value | intcomma }}</p>
-								        <p>Deaths: {{ member.get_cs_info.1.value | intcomma }}</p>
-								        <p>Bombs planted: {{ member.get_cs_info.3.value | intcomma }}</p>
-								        <p>Wins: {{ member.get_cs_info.5.value | intcomma }}</p>
+							        	<p>Country: {{ member.get_steam_info.loccountrycode }}</p>
+							        	<p>Hours: {% widthratio member.get_cs_info.total_time_played 3600 1 %}</p>
+								        <p>Kills: {{ member.get_cs_info.total_kills | intcomma }}</p>
+								        <p>Deaths: {{ member.get_cs_info.total_deaths | intcomma }}</p>
+								        <p>Bombs planted: {{ member.get_cs_info.total_planted_bombs | intcomma }}</p>
+								        <p>Bombs defused: {{ member.get_cs_info.total_defused_bombs | intcomma }}</p>
+								        <p>Rounds won: {{ member.get_cs_info.total_wins | intcomma }}</p>
+								        <p>Kills for weapon type:</p>
+								        <ul>
+								        	<li>rifles: {% widthratio member.category_weapons_kills.rifle member.get_cs_info.total_kills 100 %}%</li>
+								        	<li>smg: {% widthratio member.category_weapons_kills.smg member.get_cs_info.total_kills 100 %}%</li>
+								        	<li>sniper: {% widthratio member.category_weapons_kills.sniper member.get_cs_info.total_kills 100 %}%</li>
+								        	<li>pistol: {% widthratio member.category_weapons_kills.pistol member.get_cs_info.total_kills 100 %}%</li>
+								        	<li>shotgun: {% widthratio member.category_weapons_kills.shotgun member.get_cs_info.total_kills 100 %}%</li>
+								        	<li>other: {% widthratio member.category_weapons_kills.other member.get_cs_info.total_kills 100 %}%</li>
+								        </ul>
 								    {% else %}
 								    	<p>The user info cannot be retrieved.</p>
 								    	<p>Check user profile visibility.</p>
@@ -52,6 +62,16 @@
 						{% endfor %}
 					</div>
 				{% endfor %}
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="page-header"></div>	
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+  					<p class="text-center">Rubén & JavierM</p>	
+				</div>
+			</div>
 		</div>
 	</body>
 </html>

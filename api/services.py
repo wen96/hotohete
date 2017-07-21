@@ -17,6 +17,8 @@ class SteamAPIService(object):
         return self._api_key
 
     def get_steam_id_from_nick_name(self, nickname):
+        """Returns the steam id from nickname.
+        """
         url = "{}/ISteamUser/ResolveVanityURL/v0001/".format(self.base_url)
         url_params = "?key={}&vanityurl={}".format(self.api_key, nickname)
 
@@ -25,6 +27,9 @@ class SteamAPIService(object):
 
     def get_steam_info(self, steam_id):
         # TODO: Use a cache with TTL (time to live)
+        """Create the steam info for cache if not exists.
+        If cs profile not founded, set cache to none.
+        """
         if steam_id not in self.cache_steam_info:
             url = "{}/ISteamUser/GetPlayerSummaries/v0002/".format(self.base_url)
             url_params = "?key={}&steamids={}".format(self.api_key, steam_id)
@@ -39,6 +44,9 @@ class SteamAPIService(object):
         return self.cache_steam_info[steam_id]
 
     def get_cs_info(self, steam_id):
+        """ Returns none if steam_id not founded. If not, returns a json object which contains the CSplayer stats
+        from def _request_endpoint or none if cs player not founded.
+        """
         if steam_id:
             url = "{}/ISteamUserStats/GetUserStatsForGame/v0002/".format(self.base_url)
             url_params = "?appid=730&key={}&steamid={}".format(self.api_key, steam_id)
@@ -55,4 +63,5 @@ class SteamAPIService(object):
             response = urllib2.urlopen(url)
             return json.loads(response.read())
         except urllib2.HTTPError:
+
             return None
