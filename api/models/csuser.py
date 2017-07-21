@@ -27,46 +27,48 @@ class CSUser(models.Model):
     @property
     def get_cs_info(self):
         if not self.csgo_info:
-            self.csgo_info = {stat['name']: stat['value'] for stat in self.steam_service.get_cs_info(self.get_steam_id)}
+            cs_info = self.steam_service.get_cs_info(self.get_steam_id) or []
+            self.csgo_info = {stat['name']: stat['value'] for stat in cs_info}
         return self.csgo_info
 
     @property
     def category_weapons_kills(self):
+        weapons_kills = {}
+        if self.csgo_info:
+            smgs = ['p90', 'bizon', 'ump45', 'mp7', 'mp9']
+            snipers = ['awp', 'ssg08']
+            pistols = ['glock', 'deagle', 'elite', 'fiveseven', 'hkp2000', 'p250']
+            rifles = ['ak47', 'm4a1', 'famas', 'galilar']
+            shotguns = ['mag7', 'xm1014', 'nova', 'sawedoff']
+            throwables = ['hegrenade', 'molotov']
 
-        smgs = ['p90', 'bizon', 'ump45', 'mp7', 'mp9']
-        snipers = ['awp', 'ssg08']
-        pistols = ['glock', 'deagle', 'elite', 'fiveseven', 'hkp2000', 'p250']
-        rifles = ['ak47', 'm4a1', 'famas', 'galilar']
-        shotguns = ['mag7', 'xm1014', 'nova', 'sawedoff']
-        # throwable = ['hegrenade', 'molotov']
+            weapons_kills = {
+                'smg': 0,
+                'sniper': 0,
+                'pistol': 0,
+                'rifle': 0,
+                'shotgun': 0,
+                'throw': 0,
+            }
 
-        weapons_kills = {
-            'smg': 0,
-            'sniper': 0,
-            'pistol': 0,
-            'rifle': 0,
-            'shotgun': 0,
-            'throw': 0,
-        }
+            for smg in smgs:
+                weapons_kills['smg'] += self.csgo_info['total_kills_{}'.format(smg)]
 
-        for smg in smgs:
-            weapons_kills['smg'] += self.csgo_info['total_kills_{}'.format(smg)]
+            for sniper in snipers:
+                weapons_kills['sniper'] += self.csgo_info['total_kills_{}'.format(sniper)]
 
-        for sniper in snipers:
-            weapons_kills['sniper'] += self.csgo_info['total_kills_{}'.format(sniper)]
+            for pistol in pistols:
+                weapons_kills['pistol'] += self.csgo_info['total_kills_{}'.format(pistol)]
 
-        for pistol in pistols:
-            weapons_kills['pistol'] += self.csgo_info['total_kills_{}'.format(pistol)]
+            for rifle in rifles:
+                weapons_kills['rifle'] += self.csgo_info['total_kills_{}'.format(rifle)]
 
-        for rifle in rifles:
-            weapons_kills['rifle'] += self.csgo_info['total_kills_{}'.format(rifle)]
+            for shotgun in shotguns:
+                weapons_kills['shotgun'] += self.csgo_info['total_kills_{}'.format(shotgun)]
 
-        for shotgun in shotguns:
-            weapons_kills['shotgun'] += self.csgo_info['total_kills_{}'.format(shotgun)]
+            for throwable in throwables:
+                weapons_kills['throw'] += self.csgo_info['total_kills_{}'.format(throwable)]
 
-        """for throw in throwable:
-            weapons_kills['throw'] += self.csgo_info['total_kills_{}'.format(throwable)]
-        """
-        weapons_kills['other'] = self.csgo_info['total_kills'] - sum(weapons_kills.values())
+            weapons_kills['other'] = self.csgo_info['total_kills'] - sum(weapons_kills.values())
 
         return weapons_kills
