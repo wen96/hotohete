@@ -32,20 +32,13 @@ class CSUser(models.Model):
 
     @property
     def category_weapons_kills(self):
-        """ {'total_kills_p90': 123, 'total_kills_awp': 33}
-
-            {
-                'p90': 123,
-                'awp': 123
-            }
-        """
-        weapons_kills = {}
 
         smgs = ['p90', 'bizon', 'ump45', 'mp7', 'mp9']
         snipers = ['awp', 'ssg08']
         pistols = ['glock', 'deagle', 'elite', 'fiveseven', 'hkp2000', 'p250']
         rifles = ['ak47', 'm4a1', 'famas', 'galilar']
         shotguns = ['mag7', 'xm1014', 'nova', 'sawedoff']
+        # throwable = ['hegrenade', 'molotov']
 
         weapons_kills = {
             'smg': 0,
@@ -53,23 +46,27 @@ class CSUser(models.Model):
             'pistol': 0,
             'rifle': 0,
             'shotgun': 0,
+            'throw': 0,
         }
 
         for smg in smgs:
             weapons_kills['smg'] += self.csgo_info['total_kills_{}'.format(smg)]
 
-        for smg in snipers:
-            weapons_kills['sniper'] += self.csgo_info['total_kills_{}'.format(smg)]
+        for sniper in snipers:
+            weapons_kills['sniper'] += self.csgo_info['total_kills_{}'.format(sniper)]
 
-        for smg in pistols:
-            weapons_kills['pistol'] += self.csgo_info['total_kills_{}'.format(smg)]
+        for pistol in pistols:
+            weapons_kills['pistol'] += self.csgo_info['total_kills_{}'.format(pistol)]
 
-        for smg in rifles:
-            weapons_kills['rifle'] += self.csgo_info['total_kills_{}'.format(smg)]
+        for rifle in rifles:
+            weapons_kills['rifle'] += self.csgo_info['total_kills_{}'.format(rifle)]
 
-        for smg in shotguns:
-            weapons_kills['shotgun'] += self.csgo_info['total_kills_{}'.format(smg)]
+        for shotgun in shotguns:
+            weapons_kills['shotgun'] += self.csgo_info['total_kills_{}'.format(shotgun)]
 
+        """for throw in throwable:
+            weapons_kills['throw'] += self.csgo_info['total_kills_{}'.format(throwable)]
+        """
         weapons_kills['other'] = self.csgo_info['total_kills'] - sum(weapons_kills.values())
 
         return weapons_kills

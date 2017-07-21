@@ -9,19 +9,17 @@
 	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	</head>
-	<body>
+	<body style="background-color:#262626;color:#f2f2f2;font-family: Helvetica;">
 		<div class="container">
 			<div class="row">
-				<div class="col-sm-4">
-				</div>
-				<div class="col-sm-4">
-						<h1 class="text-center">Hotohete</h1>		
-				</div>
-				<div class="col-sm-4">
+				<div class="col-sm-12">
+					<div class="page-header">
+  							<h1 class="text-center">Hotohete CSGO stats</h1>
+					</div>	
 				</div>
 			</div>
 				{% for team in teams %}
-					<div class="row">
+					<div class="row" style="margin-bottom: 10px;">
 						<div class="col-sm-4"></div>
 						<div class="col-sm-4">
 						 	<h2 class="text-center">{{ team.name }}</h2>
@@ -31,7 +29,7 @@
 					<div class="row">
 				 		{% for member in team.csuser_set.all %}
 					 		<div class="col-sm-3">
-					 			<div class="thumbnail">
+					 			<div class="thumbnail" style="background-color:#f2f2f2">
 							      <img src="{{member.get_steam_info.avatarfull}}" alt="{{ member.steam_username }}">
 							      <div class="caption">
 							        <h3 class="text-center">{{ member.get_steam_info.personaname }}</h3>
@@ -42,7 +40,8 @@
 								        <p>Deaths: {{ member.get_cs_info.total_deaths | intcomma }}</p>
 								        <p>Bombs planted: {{ member.get_cs_info.total_planted_bombs | intcomma }}</p>
 								        <p>Bombs defused: {{ member.get_cs_info.total_defused_bombs | intcomma }}</p>
-								        <p>Wins: {{ member.get_cs_info.total_wins | intcomma }}</p>
+								        <p>Rounds won: {{ member.get_cs_info.total_wins | intcomma }}</p>
+								        <p>Kills for weapon type:</p>
 								        <ul>
 								        	<li>rifles: {% widthratio member.category_weapons_kills.rifle member.get_cs_info.total_kills 100 %}%</li>
 								        	<li>smg: {% widthratio member.category_weapons_kills.smg member.get_cs_info.total_kills 100 %}%</li>
@@ -63,6 +62,16 @@
 						{% endfor %}
 					</div>
 				{% endfor %}
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="page-header"></div>	
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+  					<p class="text-center">RubenWen & JavierM</p>	
+				</div>
+			</div>
 		</div>
 	</body>
 </html>
