@@ -43,12 +43,27 @@
 								        <p>Rounds won: {{ member.get_cs_info.total_wins | intcomma }}</p>
 								        <p>Kills for weapon type:</p>
 								        <ul>
-								        	<li>rifles: {% widthratio member.category_weapons_kills.rifle member.get_cs_info.total_kills 100 %}%</li>
-								        	<li>smg: {% widthratio member.category_weapons_kills.smg member.get_cs_info.total_kills 100 %}%</li>
-								        	<li>sniper: {% widthratio member.category_weapons_kills.sniper member.get_cs_info.total_kills 100 %}%</li>
-								        	<li>pistol: {% widthratio member.category_weapons_kills.pistol member.get_cs_info.total_kills 100 %}%</li>
-								        	<li>shotgun: {% widthratio member.category_weapons_kills.shotgun member.get_cs_info.total_kills 100 %}%</li>
-								        	<li>other: {% widthratio member.category_weapons_kills.other member.get_cs_info.total_kills 100 %}%</li>
+								        	<li>
+								        		Rifles: {% widthratio member.category_weapons_kills.rifle member.get_cs_info.total_kills 100 %}% ({{member.category_weapons_kills.rifle}})
+								        	</li>
+								        	<li>
+								        		Smg: {% widthratio member.category_weapons_kills.smg member.get_cs_info.total_kills 100 %}% ({{member.category_weapons_kills.smg}})
+								        	</li>
+								        	<li>
+								        		Sniper: {% widthratio member.category_weapons_kills.sniper member.get_cs_info.total_kills 100 %}% ({{member.category_weapons_kills.sniper}})
+								        	</li>
+								        	<li>
+								        		Pistol: {% widthratio member.category_weapons_kills.pistol member.get_cs_info.total_kills 100 %}% ({{member.category_weapons_kills.pistol}})
+								        	</li>
+								        	<li>
+								        		Shotgun: {% widthratio member.category_weapons_kills.shotgun member.get_cs_info.total_kills 100 %}% ({{member.category_weapons_kills.shotgun}})
+								        	</li>
+								        	<li>
+								        		Throwable: {% widthratio member.category_weapons_kills.throw member.get_cs_info.total_kills 100 %}% ({{member.category_weapons_kills.throw}})
+								        	</li>
+								        	<li>
+								        		Shit: {% widthratio member.category_weapons_kills.other member.get_cs_info.total_kills 100 %}% ({{member.category_weapons_kills.other}})
+								        	</li>
 								        </ul>
 								    {% else %}
 								    	<p>The user info cannot be retrieved.</p>
