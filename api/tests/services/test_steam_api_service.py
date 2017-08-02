@@ -35,3 +35,18 @@ class SteamApiServiceTestCase(TestCase):
 
         # Asssert
         self.assertEqual(result, '12341234')
+
+    def test_init_api_key_is_none(self):
+        service = SteamAPIService()
+
+        self.assertIsNone(service.api_key)
+
+    def test_init_cache_on_creation_is_empty(self):
+        service = SteamAPIService()
+
+        self.assertEqual(service.cache_steam_info, {})
+
+    def test_init_base_url_(self):
+        service = SteamAPIService()
+
+        self.assertEqual(service.base_url, 'http://api.steampowered.com')
