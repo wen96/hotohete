@@ -69,16 +69,32 @@ class SteamApiServiceTestCase(TestCase):
         # Assert
         self.assertIsNone(result)
 
-    """
     @mock.patch.object(SteamAPIService, '_request_endpoint')
     @mock.patch.object(SteamAPIService, 'api_key')
     def test_cs_info_returns_playerstats(self, mock_api_key, mock_request_endpoint):
+        # Arrange
         mock_api_key.return_value = 'hummus'
-        mock_request_endpoint.return_value = {'playerstats': {'stats'}}
+        mock_request_endpoint.return_value = {'playerstats': {'stats': 'statA'}}
         steam_id = 1234
 
         #  Act
         service = SteamAPIService()
         result = service.get_cs_info(steam_id)
-        self.assertEqual(result, {'playerstats': {'stats'}})
-    """
+        # Assert
+        self.assertEqual(result, 'statA')
+
+
+"""
+    @mock.patch.object(SteamAPIService, '_request_endpoint')
+    @mock.patch.object(SteamAPIService, 'api_key')
+    def test_cs_info_urls_properly_formed(self, mock_api_key, mock_request_endpoint):
+        # Arrange
+        mock_api_key.return_value = 'hummus'
+        base_url = 'BASE'
+        mock_request_endpoint.return_value = "{}/ISteamUser/GetPlayerSummaries/v0002/".format(base_url)
+        steam_id = 1234
+
+        service = SteamAPIService()
+        result = service.get_cs_info(steam_id)
+        self.assertEqual(result, 'BASE/ISteamUserStats/GetUserStatsForGame/v0002/')
+"""
