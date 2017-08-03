@@ -1,4 +1,4 @@
-{% load humanize %}
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -27,42 +27,42 @@
 						<div class="col-sm-4"></div>
 					</div>
 					<div class="row">
-				 		{% for member in team.csuser_set.all %}
+				 		{% for member in team.csuser_set.all() %}
 					 		<div class="col-sm-3">
 					 			<div class="thumbnail" style="background-color:#f2f2f2">
 							      <img src="{{member.get_steam_info.avatarfull}}" alt="{{ member.steam_username }}">
 							      <div class="caption">
 							        <h3 class="text-center">{{ member.get_steam_info.personaname }}</h3>
 							        {% if member.get_cs_info %}
-							        	<p>Country: {{ member.get_steam_info.loccountrycode }}</p>
-							        	<p>Hours: {% widthratio member.get_cs_info.total_time_played 3600 1 %}</p>
-								        <p>Kills: {{ member.get_cs_info.total_kills | intcomma }}</p>
-								        <p>Deaths: {{ member.get_cs_info.total_deaths | intcomma }}</p>
-								        <p>Bombs planted: {{ member.get_cs_info.total_planted_bombs | intcomma }}</p>
-								        <p>Bombs defused: {{ member.get_cs_info.total_defused_bombs | intcomma }}</p>
-								        <p>Rounds won: {{ member.get_cs_info.total_wins | intcomma }}</p>
+							        	<p>Country: {{ member.get_steam_info.loccountrycode | default('Unknown') }}</p>
+							        	<p>Hours: {{ '{0:,}'.format((member.get_cs_info.total_time_played / 3600) | round(0)) }}</p>
+								        <p>Kills: {{ '{0:,}'.format(member.get_cs_info.total_kills) }}</p>
+								        <p>Deaths: {{ '{0:,}'.format(member.get_cs_info.total_deaths) }}</p>
+								        <p>Bombs planted: {{ '{0:,}'.format(member.get_cs_info.total_planted_bombs) }}</p>
+								        <p>Bombs defused: {{ '{0:,}'.format(member.get_cs_info.total_defused_bombs) }}</p>
+								        <p>Rounds won: {{ '{0:,}'.format(member.get_cs_info.total_wins) }}</p>
 								        <p>Kills for weapon type:</p>
 								        <ul>
 								        	<li>
-								        		Rifles: {% widthratio member.category_weapons_kills.rifle member.get_cs_info.total_kills 100 %}% ({{member.category_weapons_kills.rifle}})
+								        		Rifles: {{ (member.category_weapons_kills.rifle / member.get_cs_info.total_kills * 100) | round(1) }}% ({{member.category_weapons_kills.rifle }})
 								        	</li>
 								        	<li>
-								        		Smg: {% widthratio member.category_weapons_kills.smg member.get_cs_info.total_kills 100 %}% ({{member.category_weapons_kills.smg}})
+								        		SMG: {{ (member.category_weapons_kills.smg / member.get_cs_info.total_kills * 100) | round(1) }}% ({{member.category_weapons_kills.smg }})
 								        	</li>
 								        	<li>
-								        		Sniper: {% widthratio member.category_weapons_kills.sniper member.get_cs_info.total_kills 100 %}% ({{member.category_weapons_kills.sniper}})
+								        		Sniper: {{ (member.category_weapons_kills.sniper / member.get_cs_info.total_kills * 100) | round(1) }}% ({{member.category_weapons_kills.sniper }})
 								        	</li>
 								        	<li>
-								        		Pistol: {% widthratio member.category_weapons_kills.pistol member.get_cs_info.total_kills 100 %}% ({{member.category_weapons_kills.pistol}})
+								        		Pistol: {{ (member.category_weapons_kills.pistol / member.get_cs_info.total_kills * 100) | round(1) }}% ({{member.category_weapons_kills.pistol }})
 								        	</li>
 								        	<li>
-								        		Shotgun: {% widthratio member.category_weapons_kills.shotgun member.get_cs_info.total_kills 100 %}% ({{member.category_weapons_kills.shotgun}})
+								        		Shotgun: {{ (member.category_weapons_kills.shotgun / member.get_cs_info.total_kills * 100) | round(1) }}% ({{member.category_weapons_kills.shotgun }})
 								        	</li>
 								        	<li>
-								        		Throwable: {% widthratio member.category_weapons_kills.throw member.get_cs_info.total_kills 100 %}% ({{member.category_weapons_kills.throw}})
+								        		Throwable: {{ (member.category_weapons_kills.throw / member.get_cs_info.total_kills * 100) | round(1) }}% ({{member.category_weapons_kills.throw }})
 								        	</li>
 								        	<li>
-								        		Shit: {% widthratio member.category_weapons_kills.other member.get_cs_info.total_kills 100 %}% ({{member.category_weapons_kills.other}})
+								        		Shit: {{ (member.category_weapons_kills.other / member.get_cs_info.total_kills * 100) | round(1) }}% ({{member.category_weapons_kills.other }})
 								        	</li>
 								        </ul>
 								    {% else %}
