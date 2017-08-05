@@ -1,0 +1,12 @@
+body {
+	background-color: #262626;
+	color: #f2f2f2;
+}
+
+.team .team-title {
+	margin-bottom: 10px;
+}
+
+.team .thumbnail {
+	background-color: #f2f2f2;
+}

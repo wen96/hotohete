@@ -55,8 +55,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'hotohete.urls'
 
-print os.path.join(BASE_DIR, 'templates/jinja2')
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.jinja2.Jinja2',
