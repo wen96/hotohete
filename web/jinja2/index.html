@@ -1,92 +1,106 @@
 
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-	  <title>hotohete CSGO stats</title>
-	  <meta charset="utf-8">
-	  <meta name="viewport" content="width=device-width, initial-scale=1">
-	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	</head>
-	<body style="background-color:#262626;color:#f2f2f2;font-family: Helvetica;">
-		<div class="container">
-			<div class="row">
-				<div class="col-sm-12">
-					<div class="page-header">
-  							<h1 class="text-center">Hotohete CSGO stats</h1>
-					</div>	
-				</div>
-			</div>
-				{% for team in teams %}
-					<div class="row" style="margin-bottom: 10px;">
-						<div class="col-sm-4"></div>
-						<div class="col-sm-4">
-						 	<h2 class="text-center">{{ team.name }}</h2>
-						</div>
-						<div class="col-sm-4"></div>
-					</div>
-					<div class="row">
-				 		{% for member in team.csuser_set.all() %}
-					 		<div class="col-sm-3">
-					 			<div class="thumbnail" style="background-color:#f2f2f2">
-							      <img src="{{member.get_steam_info.avatarfull}}" alt="{{ member.steam_username }}">
-							      <div class="caption">
-							        <h3 class="text-center">{{ member.get_steam_info.personaname }}</h3>
-							        {% if member.get_cs_info %}
-							        	<p>Country: {{ member.get_steam_info.loccountrycode | default('Unknown') }}</p>
-							        	<p>Hours: {{ '{0:,}'.format((member.get_cs_info.total_time_played / 3600) | round(0)) }}</p>
-								        <p>Kills: {{ '{0:,}'.format(member.get_cs_info.total_kills) }}</p>
-								        <p>Deaths: {{ '{0:,}'.format(member.get_cs_info.total_deaths) }}</p>
-								        <p>Bombs planted: {{ '{0:,}'.format(member.get_cs_info.total_planted_bombs) }}</p>
-								        <p>Bombs defused: {{ '{0:,}'.format(member.get_cs_info.total_defused_bombs) }}</p>
-								        <p>Rounds won: {{ '{0:,}'.format(member.get_cs_info.total_wins) }}</p>
-								        <p>Kills for weapon type:</p>
-								        <ul>
-								        	<li>
-								        		Rifles: {{ (member.category_weapons_kills.rifle / member.get_cs_info.total_kills * 100) | round(1) }}% ({{member.category_weapons_kills.rifle }})
-								        	</li>
-								        	<li>
-								        		SMG: {{ (member.category_weapons_kills.smg / member.get_cs_info.total_kills * 100) | round(1) }}% ({{member.category_weapons_kills.smg }})
-								        	</li>
-								        	<li>
-								        		Sniper: {{ (member.category_weapons_kills.sniper / member.get_cs_info.total_kills * 100) | round(1) }}% ({{member.category_weapons_kills.sniper }})
-								        	</li>
-								        	<li>
-								        		Pistol: {{ (member.category_weapons_kills.pistol / member.get_cs_info.total_kills * 100) | round(1) }}% ({{member.category_weapons_kills.pistol }})
-								        	</li>
-								        	<li>
-								        		Shotgun: {{ (member.category_weapons_kills.shotgun / member.get_cs_info.total_kills * 100) | round(1) }}% ({{member.category_weapons_kills.shotgun }})
-								        	</li>
-								        	<li>
-								        		Throwable: {{ (member.category_weapons_kills.throw / member.get_cs_info.total_kills * 100) | round(1) }}% ({{member.category_weapons_kills.throw }})
-								        	</li>
-								        	<li>
-								        		Shit: {{ (member.category_weapons_kills.other / member.get_cs_info.total_kills * 100) | round(1) }}% ({{member.category_weapons_kills.other }})
-								        	</li>
-								        </ul>
-								    {% else %}
-								    	<p>The user info cannot be retrieved.</p>
-								    	<p>Check user profile visibility.</p>
-								    	<p>You can check the <a target="_blank" href="http://steamcommunity.com/id/{{ member.steam_username }}">user profile at steam</a>.</p>
-								    	<p></p>
-								    {% endif %}
-							      </div>
-							    </div>
-					 		</div>
-						{% endfor %}
-					</div>
-				{% endfor %}
-			<div class="row">
-				<div class="col-sm-12">
-					<div class="page-header"></div>	
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-12">
-  					<p class="text-center">Rubén & JavierM</p>	
-				</div>
-			</div>
-		</div>
-	</body>
+    <head>
+        <title>hotohete CSGO stats</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ static('img/favicon/favicon-32x32.png') }}">
+        <link rel="icon" type="image/png" sizes="96x96" href="{{ static('img/favicon/favicon-96x96.png') }}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ static('img/favicon/favicon-16x16.png') }}">
+        {% block page_head %}
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+            <link href="{{ static('css/index.css') }}" rel="stylesheet">
+        {% endblock %}
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="page-header">
+                            <h1 class="text-center">Hotohete CSGO stats</h1>
+                    </div>  
+                </div>
+            </div>
+            {% for team in teams %}
+                <div class="row team">
+                    <div class="col-sm-12">
+                        <div class="row team-title">
+                            <div class="col-sm-4"></div>
+                            <div class="col-sm-4">
+                                <h2 class="text-center">{{ team.name }}</h2>
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                        <div class="row">
+                            {% for member in team.csuser_set.all() %}
+                                <div class="col-sm-3">
+                                    <div class="thumbnail">
+                                      <img src="{{member.get_steam_info.avatarfull}}" alt="{{ member.steam_username }}">
+                                      <div class="caption">
+                                        <h3 class="text-center">{{ member.get_steam_info.personaname }}</h3>
+                                        {% if member.get_cs_info %}
+                                            <p>Country: {{ member.get_steam_info.loccountrycode | default('Unknown') }}</p>
+                                            <p>Hours: {{ '{0:,}'.format((member.get_cs_info.total_time_played / 3600) | round(0)) }}</p>
+                                            <p>Kills: {{ '{0:,}'.format(member.get_cs_info.total_kills) }}</p>
+                                            <p>Deaths: {{ '{0:,}'.format(member.get_cs_info.total_deaths) }}</p>
+                                            <p>Bombs planted: {{ '{0:,}'.format(member.get_cs_info.total_planted_bombs) }}</p>
+                                            <p>Bombs defused: {{ '{0:,}'.format(member.get_cs_info.total_defused_bombs) }}</p>
+                                            <p>Rounds won: {{ '{0:,}'.format(member.get_cs_info.total_wins) }}</p>
+                                            <p>Kills for weapon type:</p>
+                                            <ul>
+                                                <li>
+                                                    Rifles: {{ (member.category_weapons_kills.rifle / member.get_cs_info.total_kills * 100) | round(1) }}% ({{member.category_weapons_kills.rifle }})
+                                                </li>
+                                                <li>
+                                                    SMG: {{ (member.category_weapons_kills.smg / member.get_cs_info.total_kills * 100) | round(1) }}% ({{member.category_weapons_kills.smg }})
+                                                </li>
+                                                <li>
+                                                    Sniper: {{ (member.category_weapons_kills.sniper / member.get_cs_info.total_kills * 100) | round(1) }}% ({{member.category_weapons_kills.sniper }})
+                                                </li>
+                                                <li>
+                                                    Pistol: {{ (member.category_weapons_kills.pistol / member.get_cs_info.total_kills * 100) | round(1) }}% ({{member.category_weapons_kills.pistol }})
+                                                </li>
+                                                <li>
+                                                    Shotgun: {{ (member.category_weapons_kills.shotgun / member.get_cs_info.total_kills * 100) | round(1) }}% ({{member.category_weapons_kills.shotgun }})
+                                                </li>
+                                                <li>
+                                                    Throwable: {{ (member.category_weapons_kills.throw / member.get_cs_info.total_kills * 100) | round(1) }}% ({{member.category_weapons_kills.throw }})
+                                                </li>
+                                                <li>
+                                                    Shit: {{ (member.category_weapons_kills.other / member.get_cs_info.total_kills * 100) | round(1) }}% ({{member.category_weapons_kills.other }})
+                                                </li>
+                                            </ul>
+                                        {% else %}
+                                            <p>The user info cannot be retrieved.</p>
+                                            <p>Check user profile visibility.</p>
+                                            <p>You can check the <a target="_blank" href="http://steamcommunity.com/id/{{ member.steam_username }}">user profile at steam</a>.</p>
+                                            <p></p>
+                                        {% endif %}
+                                      </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="page-header"></div> 
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <p class="text-center">Rubén & JavierM</p>  
+                </div>
+            </div>
+        </div>
+        {% block page_bottom %}
+              <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+              <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+              <script src="{{ static('js/index.js') }}"></script>
+        {% endblock %}
+    </body>
 </html>
