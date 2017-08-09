@@ -7,7 +7,7 @@ from api.services import SteamAPIService
 class SteamApiServiceTestCase(TestCase):
 
     @mock.patch.object(SteamAPIService, '_request_endpoint')
-    @mock.patch.object(SteamAPIService, 'api_key')
+    @mock.patch.object(SteamAPIService, 'api_key', new_callable=mock.PropertyMock)
     def test_get_steam_id_from_nick_name_returns_none_if_user_not_found_in_reponse(
             self, mock_api_key, mock_request_endpoint):
         # Arrange
@@ -23,7 +23,7 @@ class SteamApiServiceTestCase(TestCase):
         self.assertIsNone(result)
 
     @mock.patch.object(SteamAPIService, '_request_endpoint')
-    @mock.patch.object(SteamAPIService, 'api_key')
+    @mock.patch.object(SteamAPIService, 'api_key', new_callable=mock.PropertyMock)
     def test_get_steam_id_from_nick_name_returns_steam_id(self, mock_api_key, mock_request_endpoint):
         # Arrange
         mock_api_key.return_value = 'hummus'
@@ -75,9 +75,11 @@ class SteamApiServiceTestCase(TestCase):
         # Arrange
         mock_request_endpoint.return_value = {'playerstats': {'stats': 'statA'}}
         steam_id = 1234
+
         #  Act
         service = SteamAPIService()
         result = service.get_cs_info(steam_id)
+
         # Assert
         self.assertEqual(result, 'statA')
 
@@ -90,9 +92,12 @@ class SteamApiServiceTestCase(TestCase):
         url = "http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/"
         url_params = "?appid=730&key=hummus&steamid=1234"
         super_url = "{}{}".format(url, url_params)
+
         #  Act
         service = SteamAPIService()
         service.get_cs_info(steam_id)
+
+        # Assert
         mock_request_endpoint.assert_called_with(super_url)
 
     @mock.patch.object(SteamAPIService, '_request_endpoint')
@@ -104,6 +109,10 @@ class SteamApiServiceTestCase(TestCase):
         url = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/"
         url_params = "?key=hummus&steamids=1234"
         super_url = "{}{}".format(url, url_params)
+
+        #  Act
         service = SteamAPIService()
         service.get_steam_info(steam_id)
+
+        # Assert
         mock_request_endpoint.assert_called_with(super_url)
