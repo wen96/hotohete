@@ -11,3 +11,5 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1'
 ]
+
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
