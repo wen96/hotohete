@@ -59,12 +59,8 @@ a, a:hover, a:active, a:visited, a:focus {
     margin-bottom: 2rem;
 }
 
-.vertical-center-wraper{
-	position: relative;
-}
-.vertical-center{
-	position: absolute;
-  	top: 50%;
-  	left:50%;
-  	transform: translate(-50%,-50%); /*this was the only way to vertically-center something*/
+footer {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
