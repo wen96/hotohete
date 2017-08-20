@@ -38,17 +38,20 @@ main.container {
 
 a {
 	color: #d5277c;
+	text-decoration: none;
 }
 
 a:hover {
 	color: #d5277c;
-	text-decoration: none;
 }
 
 a:visited {
 	color: #d5277c;
-	text-decoration: none;
-}/*this works wrong: I don't know why underlines visited links*/
+}
+
+a:focus {
+	color: #d5277c; 
+}
 
 .thumbnail {
 	background-color: #1f1f1f;
