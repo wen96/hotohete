@@ -24,7 +24,7 @@ header .header-container {
 }
 
 header h1 {
-	font-size: 6rem;
+	display: none;
 }
 
 footer {
@@ -36,21 +36,9 @@ main.container {
 	min-height: 30rem;
 }
 
-a {
+a, a:hover, a:active, a:visited, a:focus {
 	color: #d5277c;
 	text-decoration: none;
-}
-
-a:hover {
-	color: #d5277c;
-}
-
-a:visited {
-	color: #d5277c;
-}
-
-a:focus {
-	color: #d5277c; 
 }
 
 .thumbnail {
