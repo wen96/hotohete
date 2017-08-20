@@ -45,6 +45,11 @@ a:hover {
 	text-decoration: none;
 }
 
+a:visited {
+	color: #d5277c;
+	text-decoration: none;
+}/*this works wrong: I don't know why underlines visited links*/
+
 .thumbnail {
 	background-color: #1f1f1f;
 	border: 2px dotted #772b4f;
