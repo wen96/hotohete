@@ -24,7 +24,7 @@ header .header-container {
 }
 
 header h1 {
-	display: none;
+	font-size: 6rem;
 }
 
 footer {
@@ -36,7 +36,21 @@ main.container {
 	min-height: 30rem;
 }
 
-a, a:hover, a:active, a:visited, a:focus {
+a {
+	color: #d5277c;
+}
+
+a:hover {
+	color: #d5277c;
+	text-decoration: none;
+}
+
+a:visited {
+	color: #d5277c;
+	text-decoration: none;
+}
+
+a:active {
 	color: #d5277c;
 	text-decoration: none;
 }
@@ -59,8 +73,8 @@ a, a:hover, a:active, a:visited, a:focus {
     margin-bottom: 2rem;
 }
 
-footer {
-	display: flex;
-	align-items: center;
-	justify-content: center;
+.footeraligner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
