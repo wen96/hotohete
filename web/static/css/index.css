@@ -30,6 +30,9 @@ header h1 {
 footer {
 	background-color: #030303;
 	min-height: 10rem;
+	display: flex;
+  	align-items: center;
+  	justify-content: center;
 }
 
 main.container {
@@ -38,21 +41,12 @@ main.container {
 
 a {
 	color: #d5277c;
-}
-
-a:hover {
-	color: #d5277c;
 	text-decoration: none;
 }
 
-a:visited {
-	color: #d5277c;
-	text-decoration: none;
-}
-
-a:active {
-	color: #d5277c;
-	text-decoration: none;
+a:hover, a:visited, a:link, a:active
+{
+    color: #d5277c;
 }
 
 .thumbnail {
@@ -71,10 +65,4 @@ a:active {
 .team-title {
 	margin-top: 6rem;
     margin-bottom: 2rem;
-}
-
-.footeraligner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
