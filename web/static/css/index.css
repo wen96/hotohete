@@ -4,44 +4,44 @@
 }
 
 body {
-	background-color: #1f1f1f;
-	color: #fafafa;
+    background-color: #1f1f1f;
+    color: #fafafa;
 }
 
 h1, h2, h3, h4, h5, h6 {
-	font-family: russian;
+    font-family: russian;
 }
 
 header {
-	display: flex;
-	background-color: #030303;
-	min-height: 12rem;
+    display: flex;
+    background-color: #030303;
+    min-height: 12rem;
 }
 
 header .header-container {
-	display: flex;
-	align-items: flex-end;
+    display: flex;
+    align-items: flex-end;
 }
 
 header h1 {
-	font-size: 6rem;
+    font-size: 6rem;
 }
 
 footer {
-	background-color: #030303;
-	min-height: 10rem;
-	display: flex;
-  	align-items: center;
-  	justify-content: center;
+    background-color: #030303;
+    min-height: 10rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 main.container {
-	min-height: 30rem;
+    min-height: 30rem;
 }
 
 a {
-	color: #d5277c;
-	text-decoration: none;
+    color: #d5277c;
+    text-decoration: none;
 }
 
 a:hover, a:visited, a:link, a:active
@@ -50,19 +50,20 @@ a:hover, a:visited, a:link, a:active
 }
 
 .thumbnail {
-	background-color: #1f1f1f;
-	border: 2px dotted #772b4f;
+    background-color: #1f1f1f;
+    border: 2px dotted #772b4f;
 }
 
 .thumbnail .caption {
-	color: #fafafa;
+    color: #fafafa;
 }
 
 .thumbnail img {
-	padding: 2rem;
+    padding: 2rem;
 }
 
 .team-title {
-	margin-top: 6rem;
+
+    margin-top: 6rem;
     margin-bottom: 2rem;
 }
