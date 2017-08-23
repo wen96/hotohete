@@ -39,14 +39,10 @@ main.container {
     min-height: 30rem;
 }
 
-a {
-    color: #d5277c;
-    text-decoration: none;
-}
-
-a:hover, a:visited, a:link, a:active
+a, a:hover, a:visited, a:link, a:active
 {
     color: #d5277c;
+    text-decoration: none;
 }
 
 .thumbnail {
