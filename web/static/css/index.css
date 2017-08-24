@@ -15,7 +15,7 @@ h1, h2, h3, h4, h5, h6 {
 header {
     display: flex;
     background-color: #030303;
-    min-height: 12rem;
+    min-height: 9rem;
 }
 
 header .header-container {
@@ -29,7 +29,7 @@ header h1 {
 
 footer {
     background-color: #030303;
-    min-height: 10rem;
+    min-height: 9rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -60,6 +60,6 @@ a, a:hover, a:visited, a:link, a:active
 
 .team-title {
 
-    margin-top: 6rem;
-    margin-bottom: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 3rem;
 }
