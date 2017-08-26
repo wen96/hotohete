@@ -11,7 +11,7 @@
                 <div class="col-sm-4"></div>
             </div>
             <div class="row">
-                {% for member in team.csuser_set.all() %}
+                {% for member in team.csuser_set.filter(visible=True) %}
                     <div class="col-sm-3">
                         <div class="thumbnail">
                           <img src="{{member.get_steam_info.avatarfull}}" alt="{{ member.steam_username }}">
