@@ -1,0 +1,4 @@
+-r requirements.txt
+
+coverage==4.4.1
+pylint==1.7.2
