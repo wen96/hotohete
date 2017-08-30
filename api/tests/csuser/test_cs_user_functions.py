@@ -68,7 +68,7 @@ class CsUserFunctionsTesCase(TestCase):
 
     @mock.patch.object(SteamAPIService, 'get_cs_info')
     @mock.patch.object(CSUser, 'get_steam_id', new_callable=mock.PropertyMock)
-    def test_cs_info_return_empty_dic_when_get_cs_info_return_none(self, mock_get_steam_id, mock_get_cs_info):
+    def test_get_cs_info_return_empty_dic_when_get_cs_info_return_none(self, mock_get_steam_id, mock_get_cs_info):
         # Arrange
 
         mock_get_cs_info.return_value = []
@@ -80,3 +80,66 @@ class CsUserFunctionsTesCase(TestCase):
 
         # Assert
         self.assertEqual(result, {})
+
+    @mock.patch.object(SteamAPIService, 'get_cs_info')
+    @mock.patch.object(CSUser, 'get_steam_id', new_callable=mock.PropertyMock)
+    def test_get_cs_info_return_cs_info(self, mock_get_steam_id, mock_get_cs_info):
+        # Arrange
+
+        mock_get_cs_info.return_value = [{"name": "total_kills_p90", "value": 20}]
+
+        mock_get_steam_id.return_value = 'Javier'
+
+        #  Act
+        user_for_test = CSUser()
+        result = user_for_test.get_cs_info
+
+        self.assertEqual(result['total_kills_p90'], 20)
+
+    def test_category_weapons_return_empty_dic_if_csgo_info_is_none(self):
+        #  Act
+        user_for_test = CSUser()
+        result = user_for_test.category_weapons_kills
+
+        # Assert
+        self.assertEqual(result, {})
+
+    def test_category_weapons_return_weapon_kills(self):
+        #  'hegrenade', 'molotov'
+        user_for_test = CSUser()
+        user_for_test.csgo_info = {
+            'total_kills_p90': 10,
+            'total_kills_bizon': 10,
+            'total_kills_ump45': 10,
+            'total_kills_mp7': 10,
+            'total_kills_mp9': 10,
+            'total_kills_awp': 10,
+            'total_kills_ssg08': 10,
+            'total_kills_glock': 10,
+            'total_kills_deagle': 10,
+            'total_kills_elite': 10,
+            'total_kills_fiveseven': 10,
+            'total_kills_hkp2000': 10,
+            'total_kills_p250': 10,
+            'total_kills_ak47': 10,
+            'total_kills_m4a1': 10,
+            'total_kills_famas': 10,
+            'total_kills_galilar': 10,
+            'total_kills_mag7': 10,
+            'total_kills_xm1014': 10,
+            'total_kills_nova': 10,
+            'total_kills_sawedoff': 10,
+            'total_kills_hegrenade': 10,
+            'total_kills_molotov': 10,
+            'total_kills': 900}
+
+        result = user_for_test.category_weapons_kills
+
+        self.assertEqual(result['smg'], 50)
+        self.assertEqual(result['sniper'], 20)
+        self.assertEqual(result['pistol'], 60)
+        self.assertEqual(result['rifle'], 40)
+        self.assertEqual(result['shotgun'], 40)
+        self.assertEqual(result['throw'], 20)
+        self.assertEqual(result['other'], (900 - 230))
+        self.assertEqual(len(result.keys()), 7)
