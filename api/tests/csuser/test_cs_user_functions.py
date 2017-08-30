@@ -10,8 +10,7 @@ class CsUserFunctionsTesCase(TestCase):
 
     def test__str__returns_username(self):
         #  Act
-        user_for_test = CSUser()
-        user_for_test.steam_username = 'Pepe'
+        user_for_test = CSUser(steam_username='Pepe')
 
         # Assert
         self.assertEqual(str(user_for_test), user_for_test.steam_username)
@@ -31,7 +30,8 @@ class CsUserFunctionsTesCase(TestCase):
         self.assertEqual(result, '123')
 
     @mock.patch.object(SteamAPIService, 'get_steam_id_from_nick_name')
-    def test_user_get_steam_id_returns_steam_id_when_does_not_exist(self, mock_get_steam_id_from_nick_name, ):
+    def test_user_get_steam_id_calls_steam_api_when_id_property_does_not_exist(
+            self, mock_get_steam_id_from_nick_name, ):
         # Arrange
         mock_get_steam_id_from_nick_name.return_value = 'id'
 
@@ -46,7 +46,6 @@ class CsUserFunctionsTesCase(TestCase):
     @mock.patch.object(CSUser, 'get_steam_id', new_callable=mock.PropertyMock)
     def test_get_steam_info(self, mock_get_steam_id, mock_get_steam_info):
         # Arrange
-
         mock_get_steam_info.return_value = 'steam_info'
         mock_get_steam_id.return_value = 'Javier'
         #  Act
@@ -70,7 +69,6 @@ class CsUserFunctionsTesCase(TestCase):
     @mock.patch.object(CSUser, 'get_steam_id', new_callable=mock.PropertyMock)
     def test_get_cs_info_return_empty_dic_when_get_cs_info_return_none(self, mock_get_steam_id, mock_get_cs_info):
         # Arrange
-
         mock_get_cs_info.return_value = []
         mock_get_steam_id.return_value = 'Javier'
 
@@ -85,7 +83,6 @@ class CsUserFunctionsTesCase(TestCase):
     @mock.patch.object(CSUser, 'get_steam_id', new_callable=mock.PropertyMock)
     def test_get_cs_info_return_cs_info(self, mock_get_steam_id, mock_get_cs_info):
         # Arrange
-
         mock_get_cs_info.return_value = [{"name": "total_kills_p90", "value": 20}]
 
         mock_get_steam_id.return_value = 'Javier'
@@ -105,7 +102,7 @@ class CsUserFunctionsTesCase(TestCase):
         self.assertEqual(result, {})
 
     def test_category_weapons_return_weapon_kills(self):
-        #  'hegrenade', 'molotov'
+        #  Act
         user_for_test = CSUser()
         user_for_test.csgo_info = {
             'total_kills_p90': 10,
@@ -135,6 +132,7 @@ class CsUserFunctionsTesCase(TestCase):
 
         result = user_for_test.category_weapons_kills
 
+        # Assert
         self.assertEqual(result['smg'], 50)
         self.assertEqual(result['sniper'], 20)
         self.assertEqual(result['pistol'], 60)
