@@ -1,5 +1,5 @@
-import mock
 import json
+import mock
 
 from django.test import TestCase
 from api.models import CSTeam, CSUser, HotoheteSettings
