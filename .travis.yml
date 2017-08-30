@@ -4,4 +4,5 @@ rvm:
 
 install: "pip install -r requirements.txt"
 
-script: "python manage.py test"
+script: . scripts/run_coverage.sh
+        . scripts/run_pylint.sh
