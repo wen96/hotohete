@@ -6,6 +6,14 @@ from api.services import SteamAPIService
 
 class SteamApiServiceTestCase(TestCase):
 
+    def test_api_key_returned_when_exist(self):
+        # Act
+        service = SteamAPIService()
+        service._api_key = 'holita'
+
+        # Asssert
+        self.assertEqual(service.api_key, 'holita')
+
     @mock.patch.object(SteamAPIService, '_request_endpoint')
     @mock.patch.object(SteamAPIService, 'api_key', new_callable=mock.PropertyMock)
     def test_get_steam_id_from_nick_name_returns_none_if_user_not_found_in_reponse(
@@ -116,3 +124,19 @@ class SteamApiServiceTestCase(TestCase):
 
         # Assert
         mock_request_endpoint.assert_called_with(super_url)
+
+    @mock.patch.object(SteamAPIService, '_request_endpoint')
+    @mock.patch.object(SteamAPIService, 'api_key', new_callable=mock.PropertyMock)
+    def test_get_steam_info_set_steam_id_cache_as_none_cause_cs_profile_not_founded(
+            self, mock_api_key, mock_request_endpoint):
+
+        # Arrange
+        mock_request_endpoint.return_value = None
+        mock_api_key.return_value = 'hummus'
+        steam_id = 1234
+        #  Act
+        service = SteamAPIService()
+        service.get_steam_info(steam_id)
+
+        # Assert
+        self.assertIsNone(service.cache_steam_info[steam_id])
