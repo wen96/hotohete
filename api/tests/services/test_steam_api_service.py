@@ -42,7 +42,7 @@ class SteamApiServiceTestCase(TestCase):
         service = SteamAPIService()
 
         #  Assert
-        self.assertIsNone(service._api_key)
+        self.assertIsNone(service._api_key)  # pylint: disable=protected-access
         self.assertEqual(service.cache_steam_info, {})
         self.assertEqual(service.base_url, 'http://api.steampowered.com')
 
