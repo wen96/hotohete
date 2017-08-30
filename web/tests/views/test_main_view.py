@@ -1,15 +1,18 @@
-from django.test import Client
 from django.test import TestCase
+from api.models import CSTeam
 
 
 class MainViewTest(TestCase):
-
-    def testing_main_view_return_200(self):
-        c = Client()
-        response = c.get('/')
-        self.assertEqual(200, response.status_code)
-
     def testing_main_view_return_404(self):
-        c = Client()
-        response = c.get('BOCADILLO')
-        self.assertEqual(404, response.status_code)
+        response = self.client.get('BOCADILLO')
+
+        self.assertEqual(response.status_code, 404)
+
+    def testing_main_view_list_teams(self):
+        CSTeam.objects.create(name='sandwich')
+        CSTeam.objects.create(name='lamers')
+
+        response = self.client.get('/')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(list(response.context['teams']), list(CSTeam.objects.all()))
