@@ -4,5 +4,6 @@ rvm:
 
 install: "pip install -r requirements-dev.txt"
 
-script: . scripts/run_coverage.sh
-        . scripts/run_pylint.sh
+script:
+  - . scripts/run_coverage.sh
+  - . scripts/run_pylint.sh 
