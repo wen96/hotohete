@@ -1,10 +1,20 @@
+from unittest import TestCase
+
+import urllib2
 import mock
 
-from django.test import TestCase
 from api.services import SteamAPIService
 
 
 class SteamApiServiceTestCase(TestCase):
+
+    def test_api_key_returned_when_exist(self):
+        # Act
+        service = SteamAPIService()
+        service._api_key = 'holita'  # pylint: disable=protected-access
+
+        # Asssert
+        self.assertEqual(service.api_key, 'holita')
 
     @mock.patch.object(SteamAPIService, '_request_endpoint')
     @mock.patch.object(SteamAPIService, 'api_key', new_callable=mock.PropertyMock)
@@ -116,3 +126,45 @@ class SteamApiServiceTestCase(TestCase):
 
         # Assert
         mock_request_endpoint.assert_called_with(super_url)
+
+    @mock.patch.object(SteamAPIService, '_request_endpoint')
+    @mock.patch.object(SteamAPIService, 'api_key', new_callable=mock.PropertyMock)
+    def test_get_steam_info_set_steam_id_cache_as_none_cause_cs_profile_not_founded(
+            self, mock_api_key, mock_request_endpoint):
+
+        # Arrange
+        mock_request_endpoint.return_value = None
+        mock_api_key.return_value = 'hummus'
+        steam_id = 1234
+        #  Act
+        service = SteamAPIService()
+        service.get_steam_info(steam_id)
+
+        # Assert
+        self.assertIsNone(service.cache_steam_info[steam_id])
+
+    @mock.patch.object(urllib2, 'urlopen')
+    def test_request_service_returns_none_if_fails_to_request(self, urllib_open):
+        # Arrange
+        urllib_open.side_effect = urllib2.HTTPError('', 500, '', None, None)
+        url = 'urltonothing'
+        service = SteamAPIService()
+
+        #  Act
+        result = service._request_endpoint(url)  # pylint: disable=protected-access
+
+        # Assert
+        self.assertIsNone(result)
+
+    @mock.patch.object(urllib2, 'urlopen')
+    def test_request_service_returns_json_object_deserialized_from_response(self, urllib_open):
+        # Arrange
+        urllib_open.return_value.read.return_value = '{}'
+        url = 'urltonothing'
+        service = SteamAPIService()
+
+        #  Act
+        result = service._request_endpoint(url)  # pylint: disable=protected-access
+
+        # Assert
+        self.assertEqual(result, {})

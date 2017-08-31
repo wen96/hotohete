@@ -1,7 +1,8 @@
 # -*- coding utf-8 -*-
+from unittest import TestCase
+
 import mock
 
-from django.test import TestCase
 from api.models.csuser import CSUser
 from api.services import SteamAPIService
 
