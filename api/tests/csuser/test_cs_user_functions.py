@@ -16,12 +16,6 @@ class CsUserFunctionsTesCase(TestCase):
         # Assert
         self.assertEqual(str(user_for_test), user_for_test.steam_username)
 
-    def test_CSUser_init_csgo_as_none(self):
-        #  Act
-        user_for_test = CSUser()
-        # Assert
-        self.assertIsNone(user_for_test.csgo_info)
-
     def test_user_get_steam_id_returns_steam_id_when_exists(self):
         # Arrange
         user_for_test = CSUser()
