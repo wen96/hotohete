@@ -1,4 +1,5 @@
 import mock
+import urllib2
 
 from django.test import TestCase
 from api.services import SteamAPIService
@@ -140,3 +141,29 @@ class SteamApiServiceTestCase(TestCase):
 
         # Assert
         self.assertIsNone(service.cache_steam_info[steam_id])
+
+    @mock.patch.object(urllib2, 'urlopen')
+    def test_request_service_returns_none_if_fails_to_request(self, urllib_open):
+        # Arrange
+        urllib_open.side_effect = urllib2.HTTPError('', 500, '', None, None)
+        url = 'urltonothing'
+        service = SteamAPIService()
+
+        #  Act
+        result = service._request_endpoint(url)
+
+        # Assert
+        self.assertIsNone(result)
+
+    @mock.patch.object(urllib2, 'urlopen')
+    def test_request_service_returns_json_object_deserialized_from_response(self, urllib_open):
+        # Arrange
+        urllib_open.return_value.read.return_value = '{}'
+        url = 'urltonothing'
+        service = SteamAPIService()
+
+        #  Act
+        result = service._request_endpoint(url)
+
+        # Assert
+        self.assertEqual(result, {})
