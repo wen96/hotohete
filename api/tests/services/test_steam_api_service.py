@@ -1,5 +1,5 @@
-import mock
 import urllib2
+import mock
 
 from django.test import TestCase
 from api.services import SteamAPIService
@@ -10,7 +10,7 @@ class SteamApiServiceTestCase(TestCase):
     def test_api_key_returned_when_exist(self):
         # Act
         service = SteamAPIService()
-        service._api_key = 'holita'
+        service._api_key = 'holita'  # pylint: disable=protected-access
 
         # Asssert
         self.assertEqual(service.api_key, 'holita')
@@ -150,7 +150,7 @@ class SteamApiServiceTestCase(TestCase):
         service = SteamAPIService()
 
         #  Act
-        result = service._request_endpoint(url)
+        result = service._request_endpoint(url)  # pylint: disable=protected-access
 
         # Assert
         self.assertIsNone(result)
@@ -163,7 +163,7 @@ class SteamApiServiceTestCase(TestCase):
         service = SteamAPIService()
 
         #  Act
-        result = service._request_endpoint(url)
+        result = service._request_endpoint(url)  # pylint: disable=protected-access
 
         # Assert
         self.assertEqual(result, {})
