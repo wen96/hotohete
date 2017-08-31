@@ -1,7 +1,8 @@
+from unittest import TestCase
+
 import urllib2
 import mock
 
-from django.test import TestCase
 from api.services import SteamAPIService
 
 
