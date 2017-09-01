@@ -26,7 +26,6 @@ class SteamAPIService(object):
         return json_object["response"].get("steamid")
 
     def get_steam_info(self, steam_id):
-        # TODO: Use a cache with TTL (time to live)
         """Create the steam info for cache if not exists.
         If cs profile not founded, set cache to none.
         """

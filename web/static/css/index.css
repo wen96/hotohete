@@ -1,0 +1,65 @@
+@font-face {
+    font-family: russian;
+    src: url('fonts/Russian.ttf');
+}
+
+body {
+    background-color: #1f1f1f;
+    color: #fafafa;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: russian;
+}
+
+header {
+    display: flex;
+    background-color: #030303;
+    min-height: 9rem;
+}
+
+header .header-container {
+    display: flex;
+    align-items: flex-end;
+}
+
+header h1 {
+    font-size: 6rem;
+}
+
+footer {
+    background-color: #030303;
+    min-height: 9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+main.container {
+    min-height: 30rem;
+}
+
+a, a:hover, a:visited, a:link, a:active
+{
+    color: #d5277c;
+    text-decoration: none;
+}
+
+.thumbnail {
+    background-color: #1f1f1f;
+    border: 2px dotted #772b4f;
+}
+
+.thumbnail .caption {
+    color: #fafafa;
+}
+
+.thumbnail img {
+    padding: 2rem;
+}
+
+.team-title {
+
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+}

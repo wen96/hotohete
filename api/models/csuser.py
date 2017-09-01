@@ -6,9 +6,14 @@ class CSUser(models.Model):
     steam_username = models.CharField(max_length=255)
     team = models.ForeignKey('api.CSTeam', on_delete=models.SET_NULL, null=True)
     steam_id = models.CharField(max_length=126, null=True, blank=True)
+    visible = models.BooleanField(default=True)
+    order = models.IntegerField(default=0)
     csgo_info = None
 
     steam_service = SteamAPIService()
+
+    class Meta(object):
+        ordering = ['order']
 
     def __str__(self):
         return self.steam_username

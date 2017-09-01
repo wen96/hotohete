@@ -7,6 +7,9 @@ DATABASES['default'].update(db_from_env)
 
 ALLOWED_HOSTS = [
     'hotohete.herokuapp.com',
+    'hotohetestaging.herokuapp.com',
     'localhost',
     '127.0.0.1'
 ]
+
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
