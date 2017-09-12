@@ -1,5 +1,5 @@
 from django.db import models
-from api.services import SteamAPIService
+from api.services.steam_api_service import SteamAPIService
 
 
 class CSUser(models.Model):
@@ -8,7 +8,6 @@ class CSUser(models.Model):
     steam_id = models.CharField(max_length=126, null=True, blank=True)
     visible = models.BooleanField(default=True)
     order = models.IntegerField(default=0)
-    csgo_info = None
 
     steam_service = SteamAPIService()
 
@@ -26,20 +25,21 @@ class CSUser(models.Model):
         return self.steam_id
 
     @property
-    def get_steam_info(self):
-        return self.steam_service.get_steam_info(self.get_steam_id)
+    def steam_info(self):
+        if self.get_steam_id:
+            return self.steam_service.get_steam_info(self.get_steam_id)
 
     @property
-    def get_cs_info(self):
-        if not self.csgo_info:
+    def csgo_info(self):
+        if self.get_steam_id:
             cs_info = self.steam_service.get_cs_info(self.get_steam_id) or []
-            self.csgo_info = {stat['name']: stat['value'] for stat in cs_info}
-        return self.csgo_info
+            return {stat['name']: stat['value'] for stat in cs_info}
 
     @property
     def category_weapons_kills(self):
         weapons_kills = {}
-        if self.csgo_info:
+        csgo_info = self.csgo_info
+        if csgo_info:
             smgs = ['p90', 'bizon', 'ump45', 'mp7', 'mp9']
             snipers = ['awp', 'ssg08']
             pistols = ['glock', 'deagle', 'elite', 'fiveseven', 'hkp2000', 'p250']
@@ -57,23 +57,23 @@ class CSUser(models.Model):
             }
 
             for smg in smgs:
-                weapons_kills['smg'] += self.csgo_info['total_kills_{}'.format(smg)]
+                weapons_kills['smg'] += csgo_info['total_kills_{}'.format(smg)]
 
             for sniper in snipers:
-                weapons_kills['sniper'] += self.csgo_info['total_kills_{}'.format(sniper)]
+                weapons_kills['sniper'] += csgo_info['total_kills_{}'.format(sniper)]
 
             for pistol in pistols:
-                weapons_kills['pistol'] += self.csgo_info['total_kills_{}'.format(pistol)]
+                weapons_kills['pistol'] += csgo_info['total_kills_{}'.format(pistol)]
 
             for rifle in rifles:
-                weapons_kills['rifle'] += self.csgo_info['total_kills_{}'.format(rifle)]
+                weapons_kills['rifle'] += csgo_info['total_kills_{}'.format(rifle)]
 
             for shotgun in shotguns:
-                weapons_kills['shotgun'] += self.csgo_info['total_kills_{}'.format(shotgun)]
+                weapons_kills['shotgun'] += csgo_info['total_kills_{}'.format(shotgun)]
 
             for throwable in throwables:
-                weapons_kills['throw'] += self.csgo_info['total_kills_{}'.format(throwable)]
+                weapons_kills['throw'] += csgo_info['total_kills_{}'.format(throwable)]
 
-            weapons_kills['other'] = self.csgo_info['total_kills'] - sum(weapons_kills.values())
+            weapons_kills['other'] = csgo_info['total_kills'] - sum(weapons_kills.values())
 
         return weapons_kills
