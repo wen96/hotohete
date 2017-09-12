@@ -5,6 +5,7 @@ import mock
 
 from api.models.csuser import CSUser
 from api.services.steam_api_service import SteamAPIService
+from api.services.csuser_stats_service import CSUserStatsService
 
 
 class CSUserTesCase(TestCase):
@@ -116,57 +117,19 @@ class CSUserTesCase(TestCase):
         self.assertEqual(len(result), 1)
         self.assertEqual(result['total_kills_p90'], 20)
 
+    @mock.patch.object(CSUserStatsService, 'calculate_category_weapons_kills')
     @mock.patch.object(CSUser, 'csgo_info', new_callable=mock.PropertyMock)
-    def test_category_weapons_return_empty_dic_if_csgo_info_is_none(self, mock_csgo_info):
+    def test_category_weapons_calls_service_calculate_stats_for_weapon(self, mock_csgo_info, mock_stats_calculate):
         # Arrange
+        mock_stats_calculate.return_value = {'stats': 'happy'}
+        mock_csgo_info.return_value = {'csgo': 'info'}
         user_for_test = CSUser()
-        mock_csgo_info.return_value = None
 
         #  Act
         result = user_for_test.category_weapons_kills
 
         # Assert
-        self.assertEqual(result, {})
-
-    @mock.patch.object(CSUser, 'csgo_info', new_callable=mock.PropertyMock)
-    def test_category_weapons_return_weapon_kills(self, mock_csgo_info):
-        # Arrange
-        user_for_test = CSUser()
-        mock_csgo_info.return_value = {
-            'total_kills_p90': 10,
-            'total_kills_bizon': 10,
-            'total_kills_ump45': 10,
-            'total_kills_mp7': 10,
-            'total_kills_mp9': 10,
-            'total_kills_awp': 10,
-            'total_kills_ssg08': 10,
-            'total_kills_glock': 10,
-            'total_kills_deagle': 10,
-            'total_kills_elite': 10,
-            'total_kills_fiveseven': 10,
-            'total_kills_hkp2000': 10,
-            'total_kills_p250': 10,
-            'total_kills_ak47': 10,
-            'total_kills_m4a1': 10,
-            'total_kills_famas': 10,
-            'total_kills_galilar': 10,
-            'total_kills_mag7': 10,
-            'total_kills_xm1014': 10,
-            'total_kills_nova': 10,
-            'total_kills_sawedoff': 10,
-            'total_kills_hegrenade': 10,
-            'total_kills_molotov': 10,
-            'total_kills': 900}
-
-        #  Act
-        result = user_for_test.category_weapons_kills
-
-        # Assert
-        self.assertEqual(result['smg'], 50)
-        self.assertEqual(result['sniper'], 20)
-        self.assertEqual(result['pistol'], 60)
-        self.assertEqual(result['rifle'], 40)
-        self.assertEqual(result['shotgun'], 40)
-        self.assertEqual(result['throw'], 20)
-        self.assertEqual(result['other'], (900 - 230))
-        self.assertEqual(len(result.keys()), 7)
+        self.assertEqual(result, {'stats': 'happy'})
+        self.assertEqual(mock_csgo_info.call_count, 1)
+        self.assertEqual(mock_stats_calculate.call_count, 1)
+        self.assertEqual(mock_stats_calculate.call_args, mock.call({'csgo': 'info'}))
