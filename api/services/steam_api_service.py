@@ -9,6 +9,7 @@ class SteamAPIService(object):
         self._api_key = None
         self.base_url = 'http://api.steampowered.com'
         self.cache_steam_info = {}
+        self.cache_csgo_info = {}
 
     @property
     def api_key(self):
@@ -30,6 +31,7 @@ class SteamAPIService(object):
         If cs profile not founded, set cache to none.
         """
         if steam_id not in self.cache_steam_info:
+
             url = "{}/ISteamUser/GetPlayerSummaries/v0002/".format(self.base_url)
             url_params = "?key={}&steamids={}".format(self.api_key, steam_id)
 
@@ -46,14 +48,16 @@ class SteamAPIService(object):
         """ Returns none if steam_id not founded. If not, returns a json object which contains the CSplayer stats
         from def _request_endpoint or none if cs player not founded.
         """
-        if steam_id:
+        if steam_id and steam_id not in self.cache_csgo_info:
+
             url = "{}/ISteamUserStats/GetUserStatsForGame/v0002/".format(self.base_url)
             url_params = "?appid=730&key={}&steamid={}".format(self.api_key, steam_id)
 
             json_object = self._request_endpoint("{}{}".format(url, url_params))
 
-            return json_object["playerstats"]["stats"] if json_object else None
-        return None
+            self.cache_csgo_info[steam_id] = json_object["playerstats"]["stats"] if json_object else None
+
+        return self.cache_csgo_info[steam_id]
 
     def _request_endpoint(self, url):
         """ Returns an object loaded from a response expecting json response. None if 500 error.

@@ -6,7 +6,7 @@ from api.models import CSTeam, CSUser, HotoheteSettings
 
 
 class TeamDetailTest(TestCase):
-    @mock.patch('api.services.urllib2')
+    @mock.patch('api.services.steam_api_service.urllib2')
     def testing_list_team_members(self, mock_urllib2):
         request_union = {
             "response": {"players": {}, "steamid": 1234},

@@ -14,39 +14,39 @@
                 {% for member in team.csuser_set.filter(visible=True) %}
                     <div class="col-sm-3">
                         <div class="thumbnail">
-                          <img src="{{member.get_steam_info.avatarfull}}" alt="{{ member.steam_username }}">
+                          <img src="{{member.steam_info.avatarfull}}" alt="{{ member.steam_username }}">
                           <div class="caption">
-                            <h3 class="text-center">{{ member.get_steam_info.personaname }}</h3>
-                            {% if member.get_cs_info %}
-                                <p>Country: {{ member.get_steam_info.loccountrycode | default('Unknown') }}</p>
-                                <p>Hours: {{ '{0:,}'.format((member.get_cs_info.total_time_played / 3600) | round(0)) }}</p>
-                                <p>Kills: {{ '{0:,}'.format(member.get_cs_info.total_kills) }}</p>
-                                <p>Deaths: {{ '{0:,}'.format(member.get_cs_info.total_deaths) }}</p>
-                                <p>Bombs planted: {{ '{0:,}'.format(member.get_cs_info.total_planted_bombs) }}</p>
-                                <p>Bombs defused: {{ '{0:,}'.format(member.get_cs_info.total_defused_bombs) }}</p>
-                                <p>Rounds won: {{ '{0:,}'.format(member.get_cs_info.total_wins) }}</p>
+                            <h3 class="text-center">{{ member.steam_info.personaname }}</h3>
+                            {% if member.csgo_info %}
+                                <p>Country: {{ member.steam_info.loccountrycode | default('Unknown') }}</p>
+                                <p>Hours: {{ '{0:,}'.format((member.csgo_info.total_time_played / 3600) | round(0)) }}</p>
+                                <p>Kills: {{ '{0:,}'.format(member.csgo_info.total_kills) }}</p>
+                                <p>Deaths: {{ '{0:,}'.format(member.csgo_info.total_deaths) }}</p>
+                                <p>Bombs planted: {{ '{0:,}'.format(member.csgo_info.total_planted_bombs) }}</p>
+                                <p>Bombs defused: {{ '{0:,}'.format(member.csgo_info.total_defused_bombs) }}</p>
+                                <p>Rounds won: {{ '{0:,}'.format(member.csgo_info.total_wins) }}</p>
                                 <p>Kills for weapon type:</p>
                                 <ul>
                                     <li>
-                                        Rifles: {{ (member.category_weapons_kills.rifle / member.get_cs_info.total_kills * 100) | round(1) }}% ({{member.category_weapons_kills.rifle }})
+                                        Rifles: {{ (member.category_weapons_kills.rifle / member.csgo_info.total_kills * 100) | round(1) }}% ({{member.category_weapons_kills.rifle }})
                                     </li>
                                     <li>
-                                        SMG: {{ (member.category_weapons_kills.smg / member.get_cs_info.total_kills * 100) | round(1) }}% ({{member.category_weapons_kills.smg }})
+                                        SMG: {{ (member.category_weapons_kills.smg / member.csgo_info.total_kills * 100) | round(1) }}% ({{member.category_weapons_kills.smg }})
                                     </li>
                                     <li>
-                                        Sniper: {{ (member.category_weapons_kills.sniper / member.get_cs_info.total_kills * 100) | round(1) }}% ({{member.category_weapons_kills.sniper }})
+                                        Sniper: {{ (member.category_weapons_kills.sniper / member.csgo_info.total_kills * 100) | round(1) }}% ({{member.category_weapons_kills.sniper }})
                                     </li>
                                     <li>
-                                        Pistol: {{ (member.category_weapons_kills.pistol / member.get_cs_info.total_kills * 100) | round(1) }}% ({{member.category_weapons_kills.pistol }})
+                                        Pistol: {{ (member.category_weapons_kills.pistol / member.csgo_info.total_kills * 100) | round(1) }}% ({{member.category_weapons_kills.pistol }})
                                     </li>
                                     <li>
-                                        Shotgun: {{ (member.category_weapons_kills.shotgun / member.get_cs_info.total_kills * 100) | round(1) }}% ({{member.category_weapons_kills.shotgun }})
+                                        Shotgun: {{ (member.category_weapons_kills.shotgun / member.csgo_info.total_kills * 100) | round(1) }}% ({{member.category_weapons_kills.shotgun }})
                                     </li>
                                     <li>
-                                        Throwable: {{ (member.category_weapons_kills.throw / member.get_cs_info.total_kills * 100) | round(1) }}% ({{member.category_weapons_kills.throw }})
+                                        Throwable: {{ (member.category_weapons_kills.throw / member.csgo_info.total_kills * 100) | round(1) }}% ({{member.category_weapons_kills.throw }})
                                     </li>
                                     <li>
-                                        Shit: {{ (member.category_weapons_kills.other / member.get_cs_info.total_kills * 100) | round(1) }}% ({{member.category_weapons_kills.other }})
+                                        Shit: {{ (member.category_weapons_kills.other / member.csgo_info.total_kills * 100) | round(1) }}% ({{member.category_weapons_kills.other }})
                                     </li>
                                 </ul>
                             {% else %}
