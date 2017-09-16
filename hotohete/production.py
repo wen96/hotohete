@@ -11,6 +11,8 @@ ALLOWED_HOSTS = [
     'hotohetestaging.herokuapp.com'
 ]
 
+MIDDLEWARE += ['whitenoise.middleware.WhiteNoiseMiddleware']
+
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 SECRET_KEY = os.environ['SECRET_KEY']
