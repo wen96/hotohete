@@ -8,19 +8,16 @@ DATABASES['default'].update(db_from_env)
 
 ALLOWED_HOSTS = [
     'hotohete.herokuapp.com',
-    'hotohetestaging.herokuapp.com'
+    'hotohetestaging.herokuapp.com',
 ]
 
-MIDDLEWARE += ['whitenoise.middleware.WhiteNoiseMiddleware']
-
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 SECRET_KEY = os.environ['SECRET_KEY']
 
-# SESSION_COOKIE_SECURE = True
-# CSRF_COOKIE_SECURE = True
-# SECURE_BROWSER_XSS_FILTER = True
-# SECURE_CONTENT_TYPE_NOSNIFF = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
 
 LOGGING = {
     'version': 1,
