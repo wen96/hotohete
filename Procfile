@@ -1,2 +1,2 @@
 release: python manage.py migrate --settings=hotohete.production
-web: gunicorn hotohete.wsgi --log-file -
+web: gunicorn hotohete.wsgi --log-file=-
