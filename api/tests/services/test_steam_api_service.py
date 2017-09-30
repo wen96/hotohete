@@ -8,15 +8,19 @@ from api.services.steam_api_service import SteamAPIService
 
 class SteamApiServiceTestCase(TestCase):
 
-    def test_api_key_returned_when_exist(self):
+    @mock.patch('api.services.steam_api_service.cache')
+    def test_api_key_returned_when_exist(self, mock_cache):
         # Arrange
         service = SteamAPIService()
+        mock_cache.get.return_value = 'holita'
 
         # Act
-        service._api_key = 'holita'  # pylint: disable=protected-access
+        result = service.api_key
 
         # Asssert
-        self.assertEqual(service.api_key, 'holita')
+        self.assertEqual(result, 'holita')
+        self.assertEqual(mock_cache.get.call_count, 1)
+        self.assertEqual(mock_cache.get.call_args, mock.call('steam_api_key'))
 
     @mock.patch.object(SteamAPIService, '_request_endpoint')
     @mock.patch.object(SteamAPIService, 'api_key', new_callable=mock.PropertyMock)
@@ -65,7 +69,6 @@ class SteamApiServiceTestCase(TestCase):
         service = SteamAPIService()
 
         #  Assert
-        self.assertIsNone(service._api_key)  # pylint: disable=protected-access
         self.assertEqual(service.cache_steam_info, {})
         self.assertEqual(service.base_url, 'http://api.steampowered.com')
 

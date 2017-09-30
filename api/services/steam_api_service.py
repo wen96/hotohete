@@ -1,21 +1,27 @@
 import urllib2
 import json
+
+from django.core.cache import cache
+
 from api.models.hotohete_settings import HotoheteSettings
 
 
 class SteamAPIService(object):
 
+    STEAM_API_KEY = 'steam_api_key'
+
     def __init__(self):
-        self._api_key = None
         self.base_url = 'http://api.steampowered.com'
         self.cache_steam_info = {}
         self.cache_csgo_info = {}
 
     @property
     def api_key(self):
-        if not self._api_key:
-            self._api_key = HotoheteSettings.objects.get(key='STEAM_API_KEY').value
-        return self._api_key
+        api_key = cache.get(self.STEAM_API_KEY)
+        if not api_key:
+            api_key = HotoheteSettings.objects.get(key='STEAM_API_KEY').value
+            cache.add(self.STEAM_API_KEY, api_key)
+        return api_key
 
     def get_steam_id_from_nick_name(self, nickname):
         """Returns the steam id from nickname.
