@@ -37,10 +37,37 @@ footer {
 
 main.container {
     min-height: 30rem;
+
+    background: rgba(36,36,36,1);
+    background: -moz-linear-gradient(left, 
+        rgba(36,36,36,1) 0%, 
+        rgba(31,31,31,1) 1%, 
+        rgba(31,31,31,1) 51%, 
+        rgba(31,31,31,1) 99%, 
+        rgba(36,36,36,1) 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(36,36,36,1)), 
+        color-stop(1%, rgba(31,31,31,1)), color-stop(51%, rgba(31,31,31,1)), 
+        color-stop(99%, rgba(31,31,31,1)), color-stop(100%, rgba(36,36,36,1)));
+    background: -webkit-linear-gradient(left, rgba(36,36,36,1) 0%, 
+        rgba(31,31,31,1) 1%, 
+        rgba(31,31,31,1) 51%, 
+        rgba(31,31,31,1) 99%, 
+        rgba(36,36,36,1) 100%);
+    background: -o-linear-gradient(left, rgba(36,36,36,1) 0%, 
+        rgba(31,31,31,1) 1%, rgba(31,31,31,1) 51%, 
+        rgba(31,31,31,1) 99%, 
+        rgba(36,36,36,1) 100%);
+    background: -ms-linear-gradient(left, rgba(36,36,36,1) 0%, 
+        rgba(31,31,31,1) 1%, rgba(31,31,31,1) 51%, rgba(31,31,31,1) 99%, 
+        rgba(36,36,36,1) 100%);
+    background: linear-gradient(to right, rgba(36,36,36,1) 0%, 
+        rgba(31,31,31,1) 1%, rgba(31,31,31,1) 51%, rgba(31,31,31,1) 99%, 
+        rgba(36,36,36,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient
+    ( startColorstr='#242424', endColorstr='#242424', GradientType=1 );
 }
 
-a, a:hover, a:visited, a:link, a:active
-{
+a, a:hover, a:visited, a:link, a:active {
     color: #d5277c;
     text-decoration: none;
 }
@@ -62,4 +89,30 @@ a, a:hover, a:visited, a:link, a:active
 
     margin-top: 2rem;
     margin-bottom: 3rem;
+}
+
+.magicbox {
+    background-color: #2a2a2a;
+    height: 30rem;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 100%;
+    padding: 10px;
+}
+
+.magicbox h3 {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+.col--small {
+    padding: 0 5px;
+}
+
+.table-striped>tbody>tr:nth-of-type(odd) {
+    background-color: #1f1f1f;
+}
+
+.table>tbody>tr>td {
+    border:none;
 }

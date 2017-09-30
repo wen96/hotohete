@@ -1,9 +1,108 @@
 
 {% extends '_base.html' %}
 {% block main_content %}
-    <ul>
-        {% for team in teams %}
-            <li><a href="{{ url('team_detail', args=[team.pk]) }}">{{ team.name }}</a></li>
-        {% endfor %}
-    </ul>
+    <div class="col-sm-12">
+    	<div class="row">
+    		<div class="col-sm-5 col--small">
+    			<div class="magicbox">
+
+    				<h3>Top Players Nigga</h3>
+    				<table class="table table-striped">
+    					<tbody>
+    						<tr>
+    							<td>Realista</td>
+    						</tr>
+    						<tr>
+    							<td>Boy</td>
+    						</tr><tr>
+    							<td>Pepe</td>
+    						</tr><tr>
+    							<td>Gina</td>
+    						</tr><tr>
+    							<td>Rebeca</td>
+    						</tr>
+    					</tbody>
+    				</table>
+    			</div>
+    		</div>
+    		<div class="col-sm-3 col--small">
+    			<div class="magicbox">
+    				<h3>Realista</h3>
+    			</div>
+    		</div>
+    		<div class="col-sm-4 col--small">
+    			<div class="magicbox">
+    				<h3>Team List</h3>
+    				<table class="table table-striped">
+    					<tbody>
+    						<tr>
+    							<td>Antananarivo</td>
+    						</tr>
+    						<tr>
+    							<td>Rep.Malgache</td>
+    						</tr><tr>
+    							<td>+Rep</td>
+    						</tr><tr>
+    							<td>Triggered</td>
+    						</tr><tr>
+    							<td>Cerosesenta</td>
+    						</tr>
+    					</tbody>
+
+    				</table>
+
+    			</div>
+    		</div>
+
+    	</div>
+
+    	<div class="row">
+
+    		<div class="col-sm-3 col--small">
+    			<div class="magicbox">
+    				<h3>Top Weapons</h3>
+    			</div>
+    		</div>
+
+    		<div class="col-sm-3 col--small">
+    			<div class="magicbox">
+    				<h3>Top maps</h3>
+    			</div>
+    		</div>
+
+    		<div class="col-sm-3 col--small">
+    			<div class="magicbox">
+    				<h3>Average hotohete stats</h3>
+    			</div>
+    		</div>
+    		<div class="col-sm-3 col--small">
+    			<div class="magicbox">
+    				<h3>Top hours played</h3>
+    				<table class="table table-striped">
+    					<tbody>
+    						<tr>
+    							<td>Jeena</td>
+    							<td>20</td>
+    						</tr>
+    						<tr>
+    							<td>Rubén</td>
+    							<td>20</td>
+    						</tr><tr>
+    							<td>Cap</td>
+    							<td>20</td>
+    						</tr><tr>
+    							<td>Orfeo</td>
+    							<td>20</td>
+    						</tr><tr>
+    							<td>Xabier</td>
+    							<td>20</td>
+    						</tr>
+    					</tbody>
+
+    				</table>
+    			</div>
+
+	
+    	</div>
+    </div>
 {% endblock %}
