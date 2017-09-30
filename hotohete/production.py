@@ -1,6 +1,6 @@
-import dj_database_url
 import os
 import urlparse
+import dj_database_url
 from hotohete.settings import *
 
 DEBUG = False
