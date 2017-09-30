@@ -3,6 +3,8 @@ import urlparse
 import dj_database_url
 from hotohete.settings import *
 
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
 DEBUG = False
 
 db_from_env = dj_database_url.config(conn_max_age=500)

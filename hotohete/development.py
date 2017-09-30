@@ -1,6 +1,8 @@
 from hotohete.settings import *
 
 
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
 DATABASES['default'] = {
     'ENGINE': 'django.db.backends.postgresql',
     'HOST': 'localhost',
