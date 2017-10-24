@@ -35,6 +35,20 @@ footer {
     justify-content: center;
 }
 
+.imageflexbox{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*background-color: red;*/
+}
+
+.portrait { 
+    border-style: solid;
+    border-color: #772b4f;
+    border-width: 2px;
+    padding: 6px;
+}
+
 main.container {
     min-height: 30rem;
 
