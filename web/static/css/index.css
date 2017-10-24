@@ -35,19 +35,32 @@ footer {
     justify-content: center;
 }
 
-.imageflexbox{
+.flexboxhorizontal{
     display: flex;
     align-items: center;
     justify-content: center;
-    /*background-color: red;*/
 }
 
+.margintop{
+    margin-top: 5px;
+    overflow: auto;
+}
+
+.margintopmaxi{
+    margin-top: 10px;
+    overflow: auto;
+}
 .portrait { 
     border-style: solid;
     border-color: #772b4f;
     border-width: 2px;
     padding: 6px;
 }
+
+.nameplayer{
+    margin-right: 5px;
+}
+
 
 main.container {
     min-height: 30rem;
@@ -112,6 +125,7 @@ a, a:hover, a:visited, a:link, a:active {
     margin-bottom: 5px;
     width: 100%;
     padding: 10px;
+    overflow: hidden;
 }
 
 .magicbox h3 {
