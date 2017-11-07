@@ -64,34 +64,13 @@ footer {
 
 main.container {
     min-height: 30rem;
-
-    background: rgba(36,36,36,1);
-    background: -moz-linear-gradient(left, 
-        rgba(36,36,36,1) 0%, 
-        rgba(31,31,31,1) 1%, 
-        rgba(31,31,31,1) 51%, 
-        rgba(31,31,31,1) 99%, 
-        rgba(36,36,36,1) 100%);
-    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(36,36,36,1)), 
-        color-stop(1%, rgba(31,31,31,1)), color-stop(51%, rgba(31,31,31,1)), 
-        color-stop(99%, rgba(31,31,31,1)), color-stop(100%, rgba(36,36,36,1)));
-    background: -webkit-linear-gradient(left, rgba(36,36,36,1) 0%, 
-        rgba(31,31,31,1) 1%, 
-        rgba(31,31,31,1) 51%, 
-        rgba(31,31,31,1) 99%, 
-        rgba(36,36,36,1) 100%);
-    background: -o-linear-gradient(left, rgba(36,36,36,1) 0%, 
-        rgba(31,31,31,1) 1%, rgba(31,31,31,1) 51%, 
-        rgba(31,31,31,1) 99%, 
-        rgba(36,36,36,1) 100%);
-    background: -ms-linear-gradient(left, rgba(36,36,36,1) 0%, 
-        rgba(31,31,31,1) 1%, rgba(31,31,31,1) 51%, rgba(31,31,31,1) 99%, 
-        rgba(36,36,36,1) 100%);
-    background: linear-gradient(to right, rgba(36,36,36,1) 0%, 
-        rgba(31,31,31,1) 1%, rgba(31,31,31,1) 51%, rgba(31,31,31,1) 99%, 
-        rgba(36,36,36,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient
-    ( startColorstr='#242424', endColorstr='#242424', GradientType=1 );
+    background: linear-gradient(
+        to right, 
+        #242424 0%, 
+        #212121 1%, 
+        #212121 51%, 
+        #212121 99%, 
+        #242424 100%);
 }
 
 a, a:hover, a:visited, a:link, a:active {
