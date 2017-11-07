@@ -35,12 +35,45 @@ footer {
     justify-content: center;
 }
 
-main.container {
-    min-height: 30rem;
+.flexboxhorizontal{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-a, a:hover, a:visited, a:link, a:active
-{
+.margintop{
+    margin-top: 5px;
+    overflow: auto;
+}
+
+.margintopmaxi{
+    margin-top: 10px;
+    overflow: auto;
+}
+.portrait { 
+    border-style: solid;
+    border-color: #772b4f;
+    border-width: 2px;
+    padding: 6px;
+}
+
+.nameplayer{
+    margin-right: 5px;
+}
+
+
+main.container {
+    min-height: 30rem;
+    background: linear-gradient(
+        to right, 
+        #242424 0%, 
+        #212121 1%, 
+        #212121 51%, 
+        #212121 99%, 
+        #242424 100%);
+}
+
+a, a:hover, a:visited, a:link, a:active {
     color: #d5277c;
     text-decoration: none;
 }
@@ -62,4 +95,31 @@ a, a:hover, a:visited, a:link, a:active
 
     margin-top: 2rem;
     margin-bottom: 3rem;
+}
+
+.magicbox {
+    background-color: #2a2a2a;
+    height: 30rem;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 100%;
+    padding: 10px;
+    overflow: hidden;
+}
+
+.magicbox h3 {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+.col--small {
+    padding: 0 5px;
+}
+
+.table-striped>tbody>tr:nth-of-type(odd) {
+    background-color: #1f1f1f;
+}
+
+.table>tbody>tr>td {
+    border:none;
 }
