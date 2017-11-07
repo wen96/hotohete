@@ -4,3 +4,4 @@ dj-database-url==0.4.2
 psycopg2==2.7.1
 whitenoise==3.3.0
 Jinja2==2.9.6
+django-redis-cache==1.7.1
