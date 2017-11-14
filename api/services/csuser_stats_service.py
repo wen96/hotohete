@@ -44,4 +44,4 @@ class CSUserStatsService(object):
 
     @classmethod
     def users_by_hours_max_hours(cls, users):
-        return sorted(users, key=lambda user: user.csgo_info['total_time_played'], reverse=True)
+        return sorted(users, key=lambda user: user.csgo_info.get('total_time_played', 0), reverse=True)
