@@ -41,3 +41,7 @@ class CSUserStatsService(object):
             weapons_kills['other'] = csgo_info['total_kills'] - sum(weapons_kills.values())
 
         return weapons_kills
+
+    @classmethod
+    def users_by_hours_max_hours(cls, users):
+        return sorted(users, key=lambda user: user.csgo_info['total_time_played'], reverse=True)
