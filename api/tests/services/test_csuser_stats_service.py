@@ -1,7 +1,9 @@
 # -*- coding utf-8 -*-
 from unittest import TestCase
+from mock import Mock
 
 from api.services.csuser_stats_service import CSUserStatsService
+from api.models.csuser import CSUser
 
 
 class CSUserStatsServiceTesCase(TestCase):
@@ -55,3 +57,29 @@ class CSUserStatsServiceTesCase(TestCase):
         self.assertEqual(result['throw'], 20)
         self.assertEqual(result['other'], (900 - 230))
         self.assertEqual(len(result.keys()), 7)
+
+    def test_users_by_hours_max_hours_returns_users_sorted(self):
+        player1 = Mock(spec=CSUser, csgo_info={'total_time_played': 1})
+        player2 = Mock(spec=CSUser, csgo_info={'total_time_played': 2})
+        player3 = Mock(spec=CSUser, csgo_info={'total_time_played': 3})
+        users = [player3, player1, player2]
+
+        result = CSUserStatsService.users_by_hours_max_hours(users)
+
+        self.assertEqual(result[0], player3)
+        self.assertEqual(result[1], player2)
+        self.assertEqual(result[2], player1)
+
+    def test_users_by_hours_max_hours_when_empty_user_list(self):
+        users = []
+
+        result = CSUserStatsService.users_by_hours_max_hours(users)
+
+        self.assertEqual(result, [])
+
+    def test_users_by_hours_max_hours_when_hours_info(self):
+        users = [Mock(spec=CSUser, csgo_info={'total_time_played': 1}), Mock(spec=CSUser, csgo_info={})]
+
+        result = CSUserStatsService.users_by_hours_max_hours(users)
+
+        self.assertEqual(result, users)
