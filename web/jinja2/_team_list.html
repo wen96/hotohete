@@ -2,21 +2,11 @@
 	<h3>Team List</h3>
 	<table class="table table-striped">
 		<tbody>
-			<tr>
-				<td>Antananarivo</td>
-			</tr>
-			<tr>
-				<td>Rep.Malgache</td>
-			</tr>
-            <tr>
-				<td>+Rep</td>
-			</tr>
-            <tr>
-				<td>Triggered</td>
-			</tr>
-            <tr>
-				<td>Cerosesenta</td>
-			</tr>
+			{% for team in teams %}
+				<tr>
+					<td><a href="{{ url('team_detail', args=[team.id]) }}">{{ team.name }}</a></td>
+				</tr>
+			{% endfor %}
 		</tbody>
 	</table>
 </div>
