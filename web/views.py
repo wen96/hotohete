@@ -1,7 +1,8 @@
 from django.views.generic import View
 from django.shortcuts import render, get_object_or_404
 
-from api.models import CSTeam
+from api.models import CSTeam, CSUser
+from api.services.csuser_stats_service import CSUserStatsService
 
 
 class MainView(View):
@@ -9,8 +10,10 @@ class MainView(View):
 
     def get(self, request, *args, **kwargs):
         teams = CSTeam.objects.all()
+        users = CSUser.objects.all()
         return render(request, self.template_name, {
-            'teams': teams
+            'teams': teams,
+            'users_by_hours': CSUserStatsService.users_by_hours_max_hours(users)
         })
 
 

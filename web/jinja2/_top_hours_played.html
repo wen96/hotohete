@@ -2,26 +2,12 @@
 	<h3>Top hours played</h3>
 	<table class="table table-striped">
 		<tbody>
-			<tr>
-				<td>Jeena</td>
-				<td>20</td>
-			</tr>
-			<tr>
-				<td>Rubén</td>
-				<td>20</td>
-			</tr>
-            <tr>
-				<td>Cap</td>
-				<td>20</td>
-			</tr>
-            <tr>
-				<td>Orfeo</td>
-				<td>20</td>
-			</tr>
-            <tr>
-				<td>Xabier</td>
-				<td>20</td>
-			</tr>
+			{% for user in users_by_hours %}
+				<tr>
+					<td>{{ user.steam_info.personaname }}</td>
+					<td>{{ '{0:,}'.format((user.csgo_info.total_time_played / 3600) | round(0)) }}</td>
+				</tr>
+			{% endfor %}
 		</tbody>
 	</table>
 </div>
