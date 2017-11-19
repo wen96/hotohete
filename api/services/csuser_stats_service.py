@@ -50,7 +50,7 @@ class CSUserStatsService(object):
             wins_prefix = 'total_wins_map_'
             total_played = 0
             total_wins = 0
-            for stat_key, value in csgo_info.iteritems():
+            for stat_key in csgo_info.keys():
                 map_name = None
                 if stat_key.startswith(played_prefix):
                     map_name = stat_key.split(played_prefix)[-1]
