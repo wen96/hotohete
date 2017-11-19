@@ -1,5 +1,7 @@
+import mock
+
 from django.test import TestCase
-from api.models import CSTeam
+from api.models import CSTeam, CSUser
 
 
 class MainViewTest(TestCase):
@@ -8,8 +10,15 @@ class MainViewTest(TestCase):
 
         self.assertEqual(response.status_code, 404)
 
-    def testing_main_view_list_teams(self):
+    @mock.patch('api.services.steam_api_service.SteamAPIService.get_steam_id_from_nick_name')
+    @mock.patch('api.services.steam_api_service.SteamAPIService.get_steam_info')
+    @mock.patch('api.services.steam_api_service.SteamAPIService.get_cs_info')
+    def testing_main_view_list_teams(self, mock_cs_info, mock_steam_info, mock_steam_id):
+        mock_cs_info.return_value = {}
+        mock_steam_info.return_value = {}
+        mock_steam_id.return_value = '1234'
         CSTeam.objects.create(name='sandwich')
+        CSUser.objects.create(steam_username='testuser')
         CSTeam.objects.create(name='lamers')
 
         response = self.client.get('/')
