@@ -39,3 +39,7 @@ class CSUser(models.Model):
     @property
     def category_weapons_kills(self):
         return CSUserStatsService.calculate_category_weapons_kills(self.csgo_info)
+
+    @property
+    def maps_stats(self):
+        return CSUserStatsService.calculate_maps_stats(self.csgo_info)
