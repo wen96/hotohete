@@ -1,4 +1,6 @@
 class CSUserStatsService(object):
+    PLAYED_PREFIX = 'total_rounds_map_'
+    WINS_PREFIX = 'total_wins_map_'
 
     @classmethod
     def calculate_category_weapons_kills(cls, csgo_info):
@@ -46,32 +48,16 @@ class CSUserStatsService(object):
     def calculate_maps_stats(cls, csgo_info):
         maps_stats = {}
         if csgo_info:
-            played_prefix = 'total_rounds_map_'
-            wins_prefix = 'total_wins_map_'
             total_played = 0
             total_wins = 0
             for stat_key in csgo_info.keys():
-                map_name = None
-                if stat_key.startswith(played_prefix):
-                    map_name = stat_key.split(played_prefix)[-1]
-                elif stat_key.startswith(wins_prefix):
-                    map_name = stat_key.split(wins_prefix)[-1]
+                map_name = cls.get_map_name_from_stat_key(stat_key)
 
                 if map_name and map_name not in maps_stats:
-                    played = csgo_info.get('{}{}'.format(played_prefix, map_name), 0)
-                    wins = csgo_info.get('{}{}'.format(wins_prefix, map_name), 0)
-
-                    # Sometime we not receive total rounds played we we assume wins as played
-                    if wins > played:
-                        played = wins
-
-                    total_played += played
-                    total_wins += wins
-                    maps_stats[map_name] = {
-                        'played': played,
-                        'wins': wins,
-                        'lost': played - wins
-                    }
+                    map_stats = cls._calculate_map_stat(csgo_info, map_name)
+                    total_played += map_stats['played']
+                    total_wins += map_stats['wins']
+                    maps_stats[map_name] = map_stats
 
             unknown_played = csgo_info['total_rounds_played'] - total_played
             unknown_wins = csgo_info['total_wins'] - total_wins
@@ -81,6 +67,28 @@ class CSUserStatsService(object):
                 'lost': unknown_played - unknown_wins
             }
         return maps_stats
+
+    @classmethod
+    def _calculate_map_stat(cls, csgo_info, map_name):
+        played = csgo_info.get('{}{}'.format(cls.PLAYED_PREFIX, map_name), 0)
+        wins = csgo_info.get('{}{}'.format(cls.WINS_PREFIX, map_name), 0)
+
+        # Sometime we not receive total rounds played we we assume wins as played
+        if wins > played:
+            played = wins
+
+        return {
+            'played': played,
+            'wins': wins,
+            'lost': played - wins
+        }
+
+    @classmethod
+    def get_map_name_from_stat_key(cls, stat_key):
+        if stat_key.startswith(cls.PLAYED_PREFIX):
+            return stat_key.split(cls.PLAYED_PREFIX)[-1]
+        elif stat_key.startswith(cls.WINS_PREFIX):
+            return stat_key.split(cls.WINS_PREFIX)[-1]
 
     @classmethod
     def users_by_hours_max_hours(cls, users):
