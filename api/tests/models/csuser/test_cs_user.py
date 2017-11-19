@@ -133,3 +133,20 @@ class CSUserTesCase(TestCase):
         self.assertEqual(mock_csgo_info.call_count, 1)
         self.assertEqual(mock_stats_calculate.call_count, 1)
         self.assertEqual(mock_stats_calculate.call_args, mock.call({'csgo': 'info'}))
+
+    @mock.patch.object(CSUserStatsService, 'calculate_maps_stats')
+    @mock.patch.object(CSUser, 'csgo_info', new_callable=mock.PropertyMock)
+    def test_maps_stats_calls_calculation_service(self, mock_csgo_info, mock_stats_calculate):
+        # Arrange
+        mock_stats_calculate.return_value = {'stats': 'happy'}
+        mock_csgo_info.return_value = {'csgo': 'info'}
+        user_for_test = CSUser()
+
+        #  Act
+        result = user_for_test.maps_stats
+
+        # Assert
+        self.assertEqual(result, {'stats': 'happy'})
+        self.assertEqual(mock_csgo_info.call_count, 1)
+        self.assertEqual(mock_stats_calculate.call_count, 1)
+        self.assertEqual(mock_stats_calculate.call_args, mock.call({'csgo': 'info'}))
