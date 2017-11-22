@@ -45,7 +45,7 @@ function indexPage() {
         options: {
             responsive: true,
             legend: {
-                display: false,
+                display: false
             },
             animation: {
                 animateScale: true,
@@ -82,7 +82,7 @@ function indexPage() {
         options: {
             responsive: true,
             legend: {
-                display: false,
+                display: false
             },
             animation: {
                 animateScale: true,
