@@ -1,8 +1,11 @@
+import json
+
 from django.views.generic import View
 from django.shortcuts import render, get_object_or_404
 
 from api.models import CSTeam, CSUser
 from api.services.csuser_stats_service import CSUserStatsService
+from api.services.overall_stats_service import OverallStatsService
 
 
 class MainView(View):
@@ -13,7 +16,8 @@ class MainView(View):
         users = CSUser.objects.all()
         return render(request, self.template_name, {
             'teams': teams,
-            'users_by_hours': CSUserStatsService.users_by_hours_max_hours(users)
+            'users_by_hours': CSUserStatsService.users_by_hours_max_hours(users),
+            'map_stats': json.dumps(OverallStatsService.maps_stats_from_users(users)),
         })
 
 
