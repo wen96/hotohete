@@ -114,4 +114,14 @@ class CSUserStatsServiceTesCase(TestCase):
         self.assertEqual(result['de_lake'], {'wins': 246, 'lost': 274, 'played': 520})
         self.assertEqual(result['de_inferno'], {'wins': 2169, 'lost': 2226, 'played': 4395})
         self.assertEqual(result['ar_shoots'], {'wins': 105, 'lost': 104, 'played': 209})
-        self.assertEqual(result['unknown'], {'wins': 9502, 'lost': 9512, 'played': 19014})
+        self.assertEqual(result['unknown'], {'wins': 5752, 'lost': 6020, 'played': 11772})
+
+    def test_calculate_user_elo(self):
+        # Arrange
+        csgo_info = create_csgo_info()
+
+        # Act
+        result = CSUserStatsService.calculate_elo(csgo_info)
+
+        # Assert
+        self.assertEqual(result, 36.38547410602409)
