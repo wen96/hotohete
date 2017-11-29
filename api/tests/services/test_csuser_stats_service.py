@@ -125,3 +125,18 @@ class CSUserStatsServiceTesCase(TestCase):
 
         # Assert
         self.assertEqual(result, 36.38547410602409)
+
+    def test_calculate_user_by_elo(self):
+        # Arrange
+        best_player = Mock(csgo_info=create_csgo_info())
+        best_player.csgo_info['total_kills'] += 100
+        worst_player = Mock(csgo_info=create_csgo_info())
+        worst_player.csgo_info['total_kills'] -= 100
+        middle_player = Mock(csgo_info=create_csgo_info())
+        users = [best_player, worst_player, middle_player]
+
+        # Act
+        result = CSUserStatsService.users_by_elo(users)
+
+        # Assert
+        self.assertEqual(result, [best_player, middle_player, worst_player])

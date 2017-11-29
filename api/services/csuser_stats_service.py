@@ -45,6 +45,10 @@ class CSUserStatsService(object):
         return weapons_kills
 
     @classmethod
+    def users_by_elo(cls, users):
+        return sorted(users, key=lambda user: cls.calculate_elo(user.csgo_info), reverse=True)
+
+    @classmethod
     def calculate_elo(cls, csgo_info):
         kills_min = cls.calculate_kills_min(csgo_info)
         wins_min = cls.calculate_wins_min(csgo_info)
