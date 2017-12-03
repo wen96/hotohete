@@ -6,7 +6,7 @@
 			{% for user in users_by_elo if user.csgo_info %}
 				<tr>
 					<td>{{ user.steam_info.personaname }}</td>
-					<td alt="{{ user.elo }}">{{ user.humanized_elo }}</td>
+					<td title="{{ user.elo }}">{{ user.humanized_elo }}</td>
 				</tr>
 			{% endfor %}
 		</tbody>
