@@ -17,6 +17,7 @@ class MainView(View):
         return render(request, self.template_name, {
             'teams': teams,
             'users_by_hours': CSUserStatsService.users_by_hours_max_hours(users),
+            'users_by_elo': CSUserStatsService.users_by_elo(users),
             'map_stats': json.dumps(OverallStatsService.maps_stats_from_users(users)),
         })
 
