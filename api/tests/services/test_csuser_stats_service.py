@@ -114,4 +114,29 @@ class CSUserStatsServiceTesCase(TestCase):
         self.assertEqual(result['de_lake'], {'wins': 246, 'lost': 274, 'played': 520})
         self.assertEqual(result['de_inferno'], {'wins': 2169, 'lost': 2226, 'played': 4395})
         self.assertEqual(result['ar_shoots'], {'wins': 105, 'lost': 104, 'played': 209})
-        self.assertEqual(result['unknown'], {'wins': 9502, 'lost': 9512, 'played': 19014})
+        self.assertEqual(result['unknown'], {'wins': 5752, 'lost': 6020, 'played': 11772})
+
+    def test_calculate_user_elo(self):
+        # Arrange
+        csgo_info = create_csgo_info()
+
+        # Act
+        result = CSUserStatsService.calculate_elo(csgo_info)
+
+        # Assert
+        self.assertEqual(result, 36.38547410602409)
+
+    def test_calculate_user_by_elo(self):
+        # Arrange
+        best_player = Mock(csgo_info=create_csgo_info())
+        best_player.csgo_info['total_kills'] += 100
+        worst_player = Mock(csgo_info=create_csgo_info())
+        worst_player.csgo_info['total_kills'] -= 100
+        middle_player = Mock(csgo_info=create_csgo_info())
+        users = [best_player, worst_player, middle_player]
+
+        # Act
+        result = CSUserStatsService.users_by_elo(users)
+
+        # Assert
+        self.assertEqual(result, [best_player, middle_player, worst_player])
