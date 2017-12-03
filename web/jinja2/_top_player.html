@@ -1,18 +1,20 @@
 <div class="magicbox">
 	<div class="flexboxhorizontal">
-		<img class="portrait" src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/4b/4b3cb82d708e44d95ca88b4842e28b98e75e9a92_full.jpg" width="100rem" height="100rem">
+		<img class="portrait" src="{{ top_player.steam_info.avatarfull }}" width="100rem" height="100rem">
 	</div>
     <div class="flexboxhorizontal margintop">
-        <h3 class="nameplayer">MikeLirio</h3>
+        <h3 class="nameplayer">{{ top_player.steam_info.personaname }}</h3>
         <img src="https://flagspot.net/images/p/pt.gif" width="25rem" height="%">
     </div>
     <div class="margintop">
-        <ul>
-            <li>Kill/deaths/hour ratio: 1.5</li> 
-            <li>Rank: Russian</li> 
-            <li>Hours played: 900</li> 
-            <li>Bombs planted: 50</li>
-            <li>rounds won: 1934</li>
-        </ul>  
+        {% if top_player.csgo_info %}
+            <ul>
+                <li>Kill/deaths ratio: {{ top_player.kill_death_ratio | round(2) }}</li> 
+                <li>Rank: {{ top_player.humanized_elo }}</li> 
+                <li>Hours played: {{ '{0:,}'.format((top_player.csgo_info.total_time_played / 3600) | round(0)) }}</li> 
+                <li>Bombs planted: {{ top_player.csgo_info.total_planted_bombs }}</li>
+                <li>rounds won: {{ top_player.csgo_info.total_wins }}</li>
+            </ul>
+        {% endif %}
     </div>
 </div>

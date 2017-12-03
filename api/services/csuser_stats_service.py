@@ -93,6 +93,12 @@ class CSUserStatsService(object):
         return float(csgo_info['total_contribution_score']) / float(csgo_info['total_time_played'])
 
     @classmethod
+    def calculate_kill_death_ratio(cls, csgo_info):
+        if csgo_info:
+            return float(csgo_info['total_kills']) / float(csgo_info['total_deaths'])
+        return 0.0
+
+    @classmethod
     def calculate_maps_stats(cls, csgo_info):
         maps_stats = {}
         if csgo_info:

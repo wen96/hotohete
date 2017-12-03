@@ -13,11 +13,13 @@ class MainView(View):
 
     def get(self, request, *args, **kwargs):
         teams = CSTeam.objects.all()
-        users = CSUser.objects.all()
+        users = CSUser.objects.filter(visible=True)
+        users_by_elo = CSUserStatsService.users_by_elo(users)
         return render(request, self.template_name, {
             'teams': teams,
             'users_by_hours': CSUserStatsService.users_by_hours_max_hours(users),
-            'users_by_elo': CSUserStatsService.users_by_elo(users),
+            'users_by_elo': users_by_elo,
+            'top_player': users_by_elo[0] if users_by_elo else None,
             'map_stats': json.dumps(OverallStatsService.maps_stats_from_users(users)),
         })
 

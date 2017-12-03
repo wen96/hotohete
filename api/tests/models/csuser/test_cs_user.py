@@ -69,7 +69,7 @@ class CSUserTesCase(TestCase):
         result = user_for_test.steam_info
 
         # Assert
-        self.assertIsNone(result)
+        self.assertEqual(result, {})
         self.assertEqual(mock_get_steam_id.call_count, 1)
 
     @mock.patch.object(CSUser, 'get_steam_id', new_callable=mock.PropertyMock)
@@ -82,7 +82,7 @@ class CSUserTesCase(TestCase):
         result = user_for_test.csgo_info
 
         # Assert
-        self.assertIsNone(result)
+        self.assertEqual(result, {})
         self.assertEqual(mock_get_steam_id.call_count, 1)
 
     @mock.patch.object(SteamAPIService, 'get_cs_info')
@@ -148,3 +148,25 @@ class CSUserTesCase(TestCase):
         self.assertEqual(mock_csgo_info.call_count, 1)
         self.assertEqual(mock_stats_calculate.call_count, 1)
         self.assertEqual(mock_stats_calculate.call_args, mock.call(mock_csgo_info.return_value))
+
+    @mock.patch.object(CSUser, 'elo', new_callable=mock.PropertyMock, return_value=3)
+    def test_humanize_elo_ultra_noob_user(self, mock_elo):
+        # Arrange
+        user_for_test = CSUser()
+
+        #  Act
+        result = user_for_test.humanized_elo
+
+        # Assert
+        self.assertEqual(result, CSUser.ELO_SCALE[30])
+
+    @mock.patch.object(CSUser, 'elo', new_callable=mock.PropertyMock, return_value=100)
+    def test_humanize_elo_ultra_pro_user(self, mock_elo):
+        # Arrange
+        user_for_test = CSUser()
+
+        #  Act
+        result = user_for_test.humanized_elo
+
+        # Assert
+        self.assertEqual(result, CSUser.ELO_SCALE[40])

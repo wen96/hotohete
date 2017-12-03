@@ -76,3 +76,7 @@ class CSUser(models.Model):
         elif elo < 31:
             elo = 30
         return self.ELO_SCALE[int(elo)]
+
+    @property
+    def kill_death_ratio(self):
+        return CSUserStatsService.calculate_kill_death_ratio(self.csgo_info)

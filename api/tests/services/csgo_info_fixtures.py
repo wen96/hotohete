@@ -209,3 +209,8 @@ def create_csgo_info():
         "total_shots_bizon": 25425,
         "total_wins": 10296
     }
+
+
+def raw_csgo_info():
+    csgo_info = create_csgo_info()
+    return [{'name': stat_key, 'value': stat_value} for stat_key, stat_value in csgo_info.iteritems()]
