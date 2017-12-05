@@ -12,6 +12,24 @@ class CSUser(models.Model):
 
     steam_service = SteamAPIService()
 
+    ELO_SCALE = {
+        30: 'Do not play with me',
+        31: 'Ruski noob',
+        32: 'Still noob ',
+        33: 'Noob',
+        34: 'Noob thinking he\'s a pro',
+        35: 'Average shitty player',
+        36: 'CSGO is my live',
+        37: 'Pro Rusky killer',
+        38: 'Master Rusky',
+        39: 'Universe pro',
+        40: 'Master of universe 1',
+        41: 'Master of universe 2',
+        42: 'Master of universe 3',
+        43: 'Master of universe 4',
+        44: 'You gonna die',
+    }
+
     class Meta(object):
         ordering = ['order']
 
@@ -29,12 +47,14 @@ class CSUser(models.Model):
     def steam_info(self):
         if self.get_steam_id:
             return self.steam_service.get_steam_info(self.get_steam_id)
+        return {}
 
     @property
     def csgo_info(self):
         if self.get_steam_id:
             cs_info = self.steam_service.get_cs_info(self.get_steam_id) or []
             return {stat['name']: stat['value'] for stat in cs_info}
+        return {}
 
     @property
     def category_weapons_kills(self):
@@ -43,3 +63,20 @@ class CSUser(models.Model):
     @property
     def maps_stats(self):
         return CSUserStatsService.calculate_maps_stats(self.csgo_info)
+
+    @property
+    def elo(self):
+        return CSUserStatsService.calculate_elo(self.csgo_info)
+
+    @property
+    def humanized_elo(self):
+        elo = self.elo
+        if elo > 43:
+            elo = 40
+        elif elo < 31:
+            elo = 30
+        return self.ELO_SCALE[int(elo)]
+
+    @property
+    def kill_death_ratio(self):
+        return CSUserStatsService.calculate_kill_death_ratio(self.csgo_info)

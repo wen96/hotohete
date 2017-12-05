@@ -50,17 +50,19 @@ class CSUserStatsService(object):
 
     @classmethod
     def calculate_elo(cls, csgo_info):
-        kills_min = cls.calculate_kills_min(csgo_info)
-        wins_min = cls.calculate_wins_min(csgo_info)
-        damage_min = cls.calculate_damage_min(csgo_info)
-        wins_rate = float(csgo_info['total_wins']) * 100 / float(csgo_info['total_rounds_played'])
-        kills_round = cls.calculate_kills_round(csgo_info)
-        wins_round = cls.calculate_wins_round(csgo_info)
-        damage_round = cls.calculate_damage_round(csgo_info)
-        wins_rate_ponderate = wins_rate * 10
-        score_per_second = cls.calculate_score_per_second(csgo_info)
-        return sum([kills_min, wins_min, damage_min, wins_rate, kills_round, wins_round,
-                    damage_round, wins_rate_ponderate, score_per_second]) / 20.0
+        if csgo_info:
+            kills_min = cls.calculate_kills_min(csgo_info)
+            wins_min = cls.calculate_wins_min(csgo_info)
+            damage_min = cls.calculate_damage_min(csgo_info)
+            wins_rate = float(csgo_info['total_wins']) * 100 / float(csgo_info['total_rounds_played'])
+            kills_round = cls.calculate_kills_round(csgo_info)
+            wins_round = cls.calculate_wins_round(csgo_info)
+            damage_round = cls.calculate_damage_round(csgo_info)
+            wins_rate_ponderate = wins_rate * 10
+            score_per_second = cls.calculate_score_per_second(csgo_info)
+            return sum([kills_min, wins_min, damage_min, wins_rate, kills_round, wins_round,
+                        damage_round, wins_rate_ponderate, score_per_second]) / 20.0
+        return 0
 
     @classmethod
     def calculate_kills_min(cls, csgo_info):
@@ -89,6 +91,12 @@ class CSUserStatsService(object):
     @classmethod
     def calculate_score_per_second(cls, csgo_info):
         return float(csgo_info['total_contribution_score']) / float(csgo_info['total_time_played'])
+
+    @classmethod
+    def calculate_kill_death_ratio(cls, csgo_info):
+        if csgo_info:
+            return float(csgo_info['total_kills']) / float(csgo_info['total_deaths'])
+        return 0.0
 
     @classmethod
     def calculate_maps_stats(cls, csgo_info):

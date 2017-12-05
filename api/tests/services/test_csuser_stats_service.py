@@ -140,3 +140,13 @@ class CSUserStatsServiceTesCase(TestCase):
 
         # Assert
         self.assertEqual(result, [best_player, middle_player, worst_player])
+
+    def test_calculate_kill_death_ration_no_csgo_info(self):
+        # Arrang
+        csgo_info = None
+
+        # Act
+        result = CSUserStatsService.calculate_kill_death_ratio(csgo_info)
+
+        # Assert
+        self.assertEqual(result, 0.0)
