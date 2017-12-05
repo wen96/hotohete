@@ -53,29 +53,28 @@ function indexPage() {
             }
         }
     });
+
+
+    var weaponLabels = Object.keys(GLOBAL_WEAPON_STATS);
+    var weaponsData = [];
+    var weaponsColors = [];
+    var weaponsBorders = [];
+    for (var i = 0; i < weaponLabels.length; i++) {
+        var weaponData = GLOBAL_WEAPON_STATS[weaponLabels[i]];
+        weaponsData.push(weaponData.shots);
+        var colorIndex = i % backgroundColors.length;
+        weaponsColors.push(backgroundColors[colorIndex]);
+        weaponsBorders.push(borderColors[colorIndex]);
+    }
     var topWeaponsChart = new Chart(document.getElementById("topWeaponsChart").getContext('2d'), {
         type: 'doughnut',
         data: {
-            labels: ["M4", "USP", "Glock", "Negev", "AK-47", "Deagle"],
+            labels: weaponLabels,
             datasets: [{
                 label: '# of Votes',
-                data: [33, 12, 33, 1, 56, 3],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
+                data: weaponsData,
+                backgroundColor: weaponsColors,
+                borderColor: weaponsBorders,
                 borderWidth: 1
             }]
         },

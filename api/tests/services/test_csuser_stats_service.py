@@ -116,6 +116,19 @@ class CSUserStatsServiceTesCase(TestCase):
         self.assertEqual(result['ar_shoots'], {'wins': 105, 'lost': 104, 'played': 209})
         self.assertEqual(result['unknown'], {'wins': 5752, 'lost': 6020, 'played': 11772})
 
+    def test_weapon_stats_from_user(self):
+        # Arrange
+        csgo_info = create_csgo_info()
+
+        #  Act
+        result = CSUserStatsService.calculate_weapon_stats(csgo_info)
+
+        # Assert
+        self.assertEqual(len(result), 30)
+        self.assertEqual(result['famas'], {'hits': 3467, 'ratio': 0.24720142602495543, 'shots': 14025})
+        self.assertEqual(result['ak47'], {'hits': 18189, 'ratio': 0.19485152333204783, 'shots': 93348})
+        self.assertEqual(result['m4a1'], {'hits': 28073, 'ratio': 0.22089244545161266, 'shots': 127089})
+
     def test_calculate_user_elo(self):
         # Arrange
         csgo_info = create_csgo_info()

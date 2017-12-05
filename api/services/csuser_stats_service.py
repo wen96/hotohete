@@ -1,6 +1,8 @@
 class CSUserStatsService(object):
     PLAYED_PREFIX = 'total_rounds_map_'
     WINS_PREFIX = 'total_wins_map_'
+    SHOTS_PREFIX = 'total_shots_'
+    HITS_PREFIX = 'total_hits_'
 
     @classmethod
     def calculate_category_weapons_kills(cls, csgo_info):
@@ -97,6 +99,37 @@ class CSUserStatsService(object):
         if csgo_info:
             return float(csgo_info['total_kills']) / float(csgo_info['total_deaths'])
         return 0.0
+
+    @classmethod
+    def calculate_weapon_stats(cls, csgo_info):
+        weapon_stats = {}
+        if csgo_info:
+            for stat_key in csgo_info.keys():
+                weapon_name = cls.get_weapon_name_from_stat_key(stat_key)
+
+                if weapon_name and weapon_name not in weapon_stats:
+                    weapon_stat = cls._calculate_weapon_stat(csgo_info, weapon_name)
+                    weapon_stats[weapon_name] = weapon_stat
+        return weapon_stats
+
+    @classmethod
+    def _calculate_weapon_stat(cls, csgo_info, weapon_name):
+        shots = csgo_info.get('{}{}'.format(cls.SHOTS_PREFIX, weapon_name), 0)
+        hits = csgo_info.get('{}{}'.format(cls.HITS_PREFIX, weapon_name), 0)
+
+        return {
+            'shots': shots,
+            'hits': hits,
+            'ratio': float(hits) / float(shots) if shots != 0 else 0
+        }
+
+    @classmethod
+    def get_weapon_name_from_stat_key(cls, stat_key):
+        if stat_key not in ['total_shots_fired', 'total_shots_hit']:
+            if stat_key.startswith(cls.SHOTS_PREFIX):
+                return stat_key.split(cls.SHOTS_PREFIX)[-1]
+            elif stat_key.startswith(cls.HITS_PREFIX):
+                return stat_key.split(cls.HITS_PREFIX)[-1]
 
     @classmethod
     def calculate_maps_stats(cls, csgo_info):
