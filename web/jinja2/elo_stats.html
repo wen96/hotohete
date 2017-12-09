@@ -25,16 +25,16 @@
                     {% for user in users_by_elo if user.csgo_info %}
                         <tr>
                             <td>{{ user.steam_info.personaname }}</td>
-                            <td title="{{ user.elo }}">{{ user.kill_death_ratio | round(2) }}</td>
-                            <td title="{{ user.elo }}">{{ user.kills_min | round(2) }}</td>
-                            <td title="{{ user.elo }}">{{ user.wins_min | round(2) }}</td>
-                            <td title="{{ user.elo }}">{{ user.damanage_min | round(2) }}</td>
-                            <td title="{{ user.elo }}">{{ user.kills_round | round(2) }}</td>
-                            <td title="{{ user.elo }}">{{ user.wins_round | round(2) }}</td>
-                            <td title="{{ user.elo }}">{{ user.damange_round | round(2) }}</td>
-                            <td title="{{ user.elo }}">{{ user.score_per_second | round(2) }}</td>
-                            <td title="{{ user.elo }}">{{ user.wins_rate | round(2) }}</td>
-                            <td title="{{ user.elo }}">{{ user.elo }}</td>
+                            <td>{{ user.kill_death_ratio | round(2) }}</td>
+                            <td>{{ user.kills_min | round(2) }}</td>
+                            <td>{{ user.wins_min | round(2) }}</td>
+                            <td>{{ user.damanage_min | round(2) }}</td>
+                            <td>{{ user.kills_round | round(2) }}</td>
+                            <td>{{ user.wins_round | round(2) }}</td>
+                            <td>{{ user.damange_round | round(2) }}</td>
+                            <td>{{ user.score_per_second | round(2) }}</td>
+                            <td>{{ user.wins_rate | round(2) }}</td>
+                            <td>{{ user.elo }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>

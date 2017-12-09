@@ -85,6 +85,7 @@ class CSUser(models.Model):
     def weapon_stats(self):
         return CSUserStatsService.calculate_weapon_stats(self.csgo_info)
 
+    @property
     def kills_min(self):
         return CSUserStatsService.calculate_kills_min(self.csgo_info)
 

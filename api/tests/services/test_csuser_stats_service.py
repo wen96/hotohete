@@ -137,7 +137,7 @@ class CSUserStatsServiceTesCase(TestCase):
         result = CSUserStatsService.calculate_elo(csgo_info)
 
         # Assert
-        self.assertEqual(result, 36.38547410602409)
+        self.assertEqual(result, 59.61088691223745)
 
     def test_calculate_user_by_elo(self):
         # Arrange
