@@ -13,21 +13,19 @@ class CSUser(models.Model):
     steam_service = SteamAPIService()
 
     ELO_SCALE = {
-        30: 'Do not play with me',
-        31: 'Ruski noob',
-        32: 'Still noob ',
-        33: 'Noob',
-        34: 'Noob thinking he\'s a pro',
-        35: 'Average shitty player',
-        36: 'CSGO is my live',
-        37: 'Pro Rusky killer',
-        38: 'Master Rusky',
-        39: 'Universe pro',
-        40: 'Master of universe 1',
-        41: 'Master of universe 2',
-        42: 'Master of universe 3',
-        43: 'Master of universe 4',
-        44: 'You gonna die',
+        57: 'Do not play with me',
+        58: 'Ruski noob',
+        59: 'Still noob ',
+        60: 'Noob',
+        61: 'Noob thinking he\'s a pro',
+        62: 'Average shitty player',
+        63: 'CSGO is my live',
+        65: 'Pro Rusky killer',
+        66: 'Master Rusky',
+        67: 'Universe pro',
+        68: 'Master of universe 1',
+        69: 'Master of universe 2',
+        70: 'You gonna die',
     }
 
     class Meta(object):
@@ -71,10 +69,10 @@ class CSUser(models.Model):
     @property
     def humanized_elo(self):
         elo = self.elo
-        if elo > 43:
-            elo = 40
-        elif elo < 31:
-            elo = 30
+        if elo > 70:
+            elo = 70
+        elif elo < 57:
+            elo = 57
         return self.ELO_SCALE[int(elo)]
 
     @property
