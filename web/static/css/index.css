@@ -107,6 +107,10 @@ a, a:hover, a:visited, a:link, a:active {
     overflow: hidden;
 }
 
+.magicbox--dynamic {
+    height: auto;
+}
+
 .magicbox h3 {
     margin-top: 0;
     margin-bottom: 5px;

@@ -84,3 +84,34 @@ class CSUser(models.Model):
     @property
     def weapon_stats(self):
         return CSUserStatsService.calculate_weapon_stats(self.csgo_info)
+
+    def kills_min(self):
+        return CSUserStatsService.calculate_kills_min(self.csgo_info)
+
+    @property
+    def wins_min(self):
+        return CSUserStatsService.calculate_wins_min(self.csgo_info)
+
+    @property
+    def damanage_min(self):
+        return CSUserStatsService.calculate_damage_min(self.csgo_info)
+
+    @property
+    def kills_round(self):
+        return CSUserStatsService.calculate_kills_round(self.csgo_info)
+
+    @property
+    def wins_round(self):
+        return CSUserStatsService.calculate_wins_round(self.csgo_info)
+
+    @property
+    def damange_round(self):
+        return CSUserStatsService.calculate_damage_round(self.csgo_info)
+
+    @property
+    def score_per_second(self):
+        return CSUserStatsService.calculate_score_per_second(self.csgo_info)
+
+    @property
+    def wins_rate(self):
+        return float(self.csgo_info['total_wins']) * 100 / float(self.csgo_info['total_rounds_played'])
