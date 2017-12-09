@@ -21,6 +21,7 @@ class MainView(View):
             'users_by_elo': users_by_elo,
             'top_player': users_by_elo[0] if users_by_elo else None,
             'map_stats': json.dumps(OverallStatsService.maps_stats_from_users(users)),
+            'weapon_stats': json.dumps(OverallStatsService.weapon_stats_from_users(users)),
         })
 
 

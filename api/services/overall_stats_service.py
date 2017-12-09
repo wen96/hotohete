@@ -15,6 +15,17 @@ class OverallStatsService(object):
         return map_stats
 
     @classmethod
+    def weapon_stats_from_users(cls, users):
+        weapon_stats = defaultdict(lambda: {'hits': 0, 'shots': 0})
+        for user in users:
+            user_weapon_stats = user.weapon_stats
+            for weapon_name in user_weapon_stats.keys():
+                weapon_stats[weapon_name]['hits'] += user_weapon_stats[weapon_name]['hits']
+                weapon_stats[weapon_name]['shots'] += user_weapon_stats[weapon_name]['shots']
+
+        return weapon_stats
+
+    @classmethod
     def maps_by_played(cls, map_stats):
         map_list = []
         for map_name in map_stats.keys():

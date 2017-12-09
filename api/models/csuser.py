@@ -80,3 +80,7 @@ class CSUser(models.Model):
     @property
     def kill_death_ratio(self):
         return CSUserStatsService.calculate_kill_death_ratio(self.csgo_info)
+
+    @property
+    def weapon_stats(self):
+        return CSUserStatsService.calculate_weapon_stats(self.csgo_info)
