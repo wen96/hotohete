@@ -33,3 +33,14 @@ class TeamDetailView(View):
         return render(request, self.template_name, {
             'team': team
         })
+
+
+class ELOStatsView(View):
+    template_name = 'elo_stats.html'
+
+    def get(self, request, *args, **kwargs):
+        users = CSUser.objects.filter(visible=True)
+        users_by_elo = CSUserStatsService.users_by_elo(users)
+        return render(request, self.template_name, {
+            'users_by_elo': users_by_elo
+        })

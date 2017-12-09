@@ -158,7 +158,7 @@ class CSUserTesCase(TestCase):
         result = user_for_test.humanized_elo
 
         # Assert
-        self.assertEqual(result, CSUser.ELO_SCALE[30])
+        self.assertEqual(result, CSUser.ELO_SCALE[57])
 
     @mock.patch.object(CSUser, 'elo', new_callable=mock.PropertyMock, return_value=100)
     def test_humanize_elo_ultra_pro_user(self, mock_elo):
@@ -169,4 +169,4 @@ class CSUserTesCase(TestCase):
         result = user_for_test.humanized_elo
 
         # Assert
-        self.assertEqual(result, CSUser.ELO_SCALE[40])
+        self.assertEqual(result, CSUser.ELO_SCALE[70])
