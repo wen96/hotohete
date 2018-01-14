@@ -1,9 +1,33 @@
 
 {% extends '_base.html' %}
 {% block main_content %}
-    <ul>
-        {% for team in teams %}
-            <li><a href="{{ url('team_detail', args=[team.pk]) }}">{{ team.name }}</a></li>
-        {% endfor %}
-    </ul>
+    <div class="col-sm-12">
+    	<div class="row">
+    		<div class="col-sm-5 col--small">
+    			{% include '_top_players.html' %}
+    		</div>
+    		<div class="col-sm-3 col--small">
+    			{% include '_top_player.html' %}
+    		</div>
+    		<div class="col-sm-4 col--small">
+    			{% include '_team_list.html' %}
+    		</div>
+    	</div>
+    	<div class="row">
+    		<div class="col-sm-3 col--small">
+    			{% include '_top_weapons.html' %}
+    		</div>
+    		<div class="col-sm-3 col--small">
+    			{% include '_top_maps.html' %}
+    		</div>
+    		<div class="col-sm-6 col--small">
+    			{% include '_top_hours_played.html'%}
+            </div>
+    	</div>
+    </div>
+{% endblock %}
+{% block page_bottom %}
+    {{ super() }}
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
+    <script type="text/javascript" src="{{ static('js/index.js') }}"></script>
 {% endblock %}

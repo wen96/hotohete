@@ -1,0 +1,12 @@
+<div class="magicbox">
+	<h3>Team List</h3>
+	<table class="table table-striped">
+		<tbody>
+			{% for team in teams %}
+				<tr>
+					<td><a href="{{ url('team_detail', args=[team.id]) }}">{{ team.name }}</a></td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>

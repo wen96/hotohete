@@ -1,0 +1,14 @@
+<div class="magicbox">
+	<h3>Top Players <small><a href="{{ url('elo_stats') }}">+info</a></small></h3>
+	<table class="table table-striped">
+		<tbody>
+
+			{% for user in users_by_elo if user.csgo_info %}
+				<tr>
+					<td>{{ user.steam_info.personaname }}</td>
+					<td title="{{ user.elo }}">{{ user.humanized_elo }}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>

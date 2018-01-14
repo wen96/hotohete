@@ -1,0 +1,13 @@
+<div class="magicbox">
+	<h3>Top hours played</h3>
+	<table class="table table-striped">
+		<tbody>
+			{% for user in users_by_hours if user.csgo_info %}
+				<tr>
+					<td>{{ user.steam_info.personaname }}</td>
+					<td>{{ '{0:,}'.format((user.csgo_info.total_time_played / 3600) | round(0)) }}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
